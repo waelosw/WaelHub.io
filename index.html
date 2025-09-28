@@ -1,6 +1,3 @@
-<title>.</title>
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,8 +8,47 @@
       background-color: #0a0a0a;
       color: #e0e0e0;
       font-family: 'Orbitron', sans-serif;
+      margin: 0;
       text-align: center;
-      padding-top: 100px;
+      padding-top: 120px;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      background-color: #1a1a1a;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .menu-toggle {
+      font-size: 40px;
+      color: #a020f0;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: none;
+      flex-direction: column;
+      background-color: #1a1a1a;
+      border: 2px solid #a020f0;
+      border-radius: 12px;
+      padding: 20px;
+      position: absolute;
+      top: 80px;
+      right: 20px;
+    }
+
+    .menu a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 24px;
+      margin: 10px 0;
+    }
+
+    .menu a:hover {
+      color: #a020f0;
     }
 
     h1 {
@@ -28,7 +64,7 @@
       color: #ccc;
     }
 
-    button {
+    .btn {
       background-color: #a020f0;
       color: white;
       border: none;
@@ -39,35 +75,77 @@
       border-radius: 16px;
       box-shadow: 0 0 30px #a020f0;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-bottom: 30px;
     }
 
-    button:hover {
+    .btn:hover {
       background-color: #7a1cc0;
       transform: scale(1.08);
       box-shadow: 0 0 40px #a020f0;
+    }
+
+    .discord-btn {
+      background-color: #5865F2;
+      box-shadow: 0 0 30px #5865F2;
+    }
+
+    .discord-btn:hover {
+      background-color: #4752c4;
+      box-shadow: 0 0 40px #5865F2;
+    }
+
+    .discord-text {
+      font-size: 28px;
+      color: #aaa;
+      margin-top: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
   </style>
 </head>
 <body>
 
-  <h1>Titre</h1>
-  <p>description</p>
+  <div class="navbar">
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <div class="menu" id="menu">
+      <a href="index.html">Accueil</a>
+      <a href="script.html">Script</a>
+      <a href="discord.html">Discord</a>
+    </div>
+  </div>
 
-  <button onclick="copyScript()">📋 Copier le Script</button>
+  <h1>WAEL HUB</h1>
+  <p>Appuie pour copier ton script Roblox légendaire :</p>
+
+  <button class="btn" onclick="copyScript()">📋 Copier ugly hub</button>
+
+  <br>
+
+  <a href="https://discord.gg/CHpaNDw83f" target="_blank">
+    <button class="btn discord-btn">💬 Rejoindre le Discord</button>
+  </a>
+
+  <div class="discord-text">
+    Pour être informé de toutes les mises à jour du script,<br>
+    rejoins notre Discord !
+  </div>
 
   <script>
     function copyScript() {
-      const script = `loadstring(game:HttpGet("https://raw.githubusercontent.com/waelosw/Ray-wael/main/Wael-Ray.lua"))()`;
+      const script = `loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/53325754de16c11fbf8bf78101c1c881.lua"))()`;
       navigator.clipboard.writeText(script).then(() => {
         alert("✅ Script copié dans le presse-papiers !");
       }).catch(err => {
         alert("❌ Erreur lors de la copie : " + err);
       });
     }
+
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+    }
   </script>
 
 </body>
 </html>
-
-
-
