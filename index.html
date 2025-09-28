@@ -141,6 +141,35 @@
       });
     }
 
+
+    
+  
+  
+  
+  
+  <button class="btn" onclick="copyScript()">📋 Copier ugly hub</button>
+
+  <br>
+
+  <a href="https://discord.gg/CHpaNDw83f" target="_blank">
+    <button class="btn discord-btn">💬 Rejoindre le Discord</button>
+  </a>
+
+  <div class="discord-text">
+    Pour être informé de toutes les mises à jour du script,<br>
+    rejoins notre Discord !
+  </div>
+
+  <script>
+    function copyScript() {
+      const script = `loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/53325754de16c11fbf8bf78101c1c881.lua"))()`;
+      navigator.clipboard.writeText(script).then(() => {
+        alert("✅ Script copié dans le presse-papiers !");
+      }).catch(err => {
+        alert("❌ Erreur lors de la copie : " + err);
+      });
+    }
+
     function toggleMenu() {
       const menu = document.getElementById("menu");
       menu.style.display = menu.style.display === "flex" ? "none" : "flex";
@@ -149,4 +178,5 @@
 
 </body>
 </html>
+
 
