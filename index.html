@@ -2,181 +2,55 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>WAEL HUB — Script Légendaire</title>
+  <title>Mon Site Vert & Blanc</title>
   <style>
     body {
-      background-color: #0a0a0a;
-      color: #e0e0e0;
-      font-family: 'Orbitron', sans-serif;
+      background-color: white;
+      color: #2e7d32; /* Vert foncé pour le texte */
+      font-family: Arial, sans-serif;
       margin: 0;
-      text-align: center;
-      padding-top: 120px;
-    }
-
-    .navbar {
-      position: fixed;
-      top: 0;
-      right: 0;
-      background-color: #1a1a1a;
       padding: 20px;
-      z-index: 1000;
     }
 
-    .menu-toggle {
-      font-size: 40px;
-      color: #a020f0;
-      cursor: pointer;
-    }
-
-    .menu {
-      display: none;
-      flex-direction: column;
-      background-color: #1a1a1a;
-      border: 2px solid #a020f0;
-      border-radius: 12px;
-      padding: 20px;
-      position: absolute;
-      top: 80px;
-      right: 20px;
-    }
-
-    .menu a {
-      color: #ccc;
-      text-decoration: none;
-      font-size: 24px;
-      margin: 10px 0;
-    }
-
-    .menu a:hover {
-      color: #a020f0;
-    }
-
-    h1 {
-      font-size: 90px;
-      color: #a020f0;
-      text-shadow: 0 0 30px #a020f0;
-      margin-bottom: 40px;
-    }
-
-    p {
-      font-size: 36px;
-      margin-bottom: 60px;
-      color: #ccc;
+    h1, h2, p {
+      color: #2e7d32;
     }
 
     .btn {
-      background-color: #a020f0;
-      color: white;
+      background-color: #2e7d32; /* Vert */
+      color: white; /* Texte blanc */
       border: none;
-      padding: 30px 60px;
-      font-size: 32px;
-      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
       cursor: pointer;
-      border-radius: 16px;
-      box-shadow: 0 0 30px #a020f0;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      margin-bottom: 30px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
     }
 
     .btn:hover {
-      background-color: #7a1cc0;
-      transform: scale(1.08);
-      box-shadow: 0 0 40px #a020f0;
+      background-color: #1b5e20; /* Vert plus foncé au survol */
     }
 
-    .discord-btn {
-      background-color: #5865F2;
-      box-shadow: 0 0 30px #5865F2;
-    }
-
-    .discord-btn:hover {
-      background-color: #4752c4;
-      box-shadow: 0 0 40px #5865F2;
-    }
-
-    .discord-text {
-      font-size: 28px;
-      color: #aaa;
-      margin-top: 20px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
+    header, footer {
+      background-color: #e8f5e9; /* Vert très clair */
+      padding: 10px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Bienvenue sur mon site</h1>
+  </header>
 
-  <div class="navbar">
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-    <div class="menu" id="menu">
-      <a href="index.html">Accueil</a>
-      <a href="script.html">Script</a>
-      <a href="discord.html">Discord</a>
-    </div>
-  </div>
+  <main>
+    <h2>À propos</h2>
+    <p>Voici un exemple de site avec un thème vert et blanc.</p>
+    <button class="btn">Cliquez ici</button>
+  </main>
 
-  <h1>WAEL HUB</h1>
-  <p>Appuie sur le nom du script que tu veux copier parmis ces scripts legendaires! :</p>
-
-  <button class="btn" onclick="copyScript()">📋 Copier ugly hub</button>
-
-  <br>
-
-  <a href="https://discord.gg/CHpaNDw83f" target="_blank">
-    <button class="btn discord-btn">💬 Rejoindre le Discord</button>
-  </a>
-
-  <div class="discord-text">
-    Pour être informé de toutes les mises à jour du script,<br>
-    rejoins notre Discord !
-  </div>
-
-  <script>
-    function copyScript() {
-      const script = `loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/53325754de16c11fbf8bf78101c1c881.lua"))()`;
-      navigator.clipboard.writeText(script).then(() => {
-        alert("✅ Script copié dans le presse-papiers !");
-      }).catch(err => {
-        alert("❌ Erreur lors de la copie : " + err);
-      });
-    }
-
-
-    
-  
-  
-  
-  
-  <button class="btn" onclick="copyScript()">📋 Copier ugly hub</button>
-
-  <br>
-
-  <a href="https://discord.gg/CHpaNDw83f" target="_blank">
-    <button class="btn discord-btn">💬 Rejoindre le Discord</button>
-  </a>
-
-  <div class="discord-text">
-    Pour être informé de toutes les mises à jour du script,<br>
-    rejoins notre Discord !
-  </div>
-
-  <script>
-    function copyScript() {
-      const script = `loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/53325754de16c11fbf8bf78101c1c881.lua"))()`;
-      navigator.clipboard.writeText(script).then(() => {
-        alert("✅ Script copié dans le presse-papiers !");
-      }).catch(err => {
-        alert("❌ Erreur lors de la copie : " + err);
-      });
-    }
-
-    function toggleMenu() {
-      const menu = document.getElementById("menu");
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-    }
-  </script>
-
+  <footer>
+    <p>&copy; 2025 Wael</p>
+  </footer>
 </body>
 </html>
-
-
