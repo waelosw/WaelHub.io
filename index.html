@@ -6,35 +6,41 @@
   <style>
     body {
       background-color: white;
-      color: #2e7d32; /* Vert foncé pour le texte */
+      color: #2e7d32;
       font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Centre horizontalement */
+      text-align: center;  /* Centre le texte */
+    }
+
+    header, footer {
+      background-color: #e8f5e9;
+      width: 100%;
+      padding: 20px 0;
+    }
+
+    main {
+      max-width: 600px;
       padding: 20px;
     }
 
-    h1, h2, p {
-      color: #2e7d32;
-    }
-
     .btn {
-      background-color: #2e7d32; /* Vert */
-      color: white; /* Texte blanc */
+      background-color: #2e7d32;
+      color: white;
       border: none;
       padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
       transition: background-color 0.3s ease;
+      margin-top: 20px;
     }
 
     .btn:hover {
-      background-color: #1b5e20; /* Vert plus foncé au survol */
-    }
-
-    header, footer {
-      background-color: #e8f5e9; /* Vert très clair */
-      padding: 10px;
-      text-align: center;
+      background-color: #1b5e20;
     }
   </style>
 </head>
@@ -45,7 +51,7 @@
 
   <main>
     <h2>À propos</h2>
-    <p>Voici un exemple de site avec un thème vert et blanc.</p>
+    <p>Voici un exemple de site avec un thème vert et blanc, entièrement centré.</p>
     <button class="btn">Cliquez ici</button>
   </main>
 
