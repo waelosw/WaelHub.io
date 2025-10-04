@@ -33,7 +33,26 @@
     }
 
     section {
-      padding: 60px 20px;
+      padding: 40px 20px;
+    }
+
+    .script-block {
+      margin-bottom: 30px;
+    }
+
+    .copy-btn {
+      background-color: #00ff99;
+      color: #1f1f1f;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .copy-btn:hover {
+      background-color: #00cc77;
     }
   </style>
 </head>
@@ -46,10 +65,66 @@
   </nav>
 
   <section>
-    <h2>Scripts de jeux</h2>
-    <p>Voici une sélection de scripts utiles pour tes jeux préférés.</p>
-    <!-- Tu peux ajouter ici des blocs de code ou des liens -->
+    <h2>Scripts à copier</h2>
+
+    <div class="script-block">
+      <p>Script 1 : Exemple de script pour débuter</p>
+      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+    </div>
+
+    <div class="script-block">
+      <p>Script 2 : Script pour améliorer ton jeu</p>
+      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+    </div>
+
+    <div class="script-block">
+      <p>Script 3 : Script de téléportation</p>
+      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+    </div>
+
+    <div class="script-block">
+      <p>Script 4 : Script de vitesse</p>
+      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+    </div>
+
+    <div class="script-block">
+      <p>Script 5 : Script de vol</p>
+      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+    </div>
+
+    <div class="script-block">
+      <p>Script 6 : Script de spawn d’objets</p>
+      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+    </div>
+
+    <div class="script-block">
+      <p>Script 7 : Script de caméra libre</p>
+      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+    </div>
+
+    <div class="script-block">
+      <p>Script 8 : Script de chat personnalisé</p>
+      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+    </div>
+
+    <div class="script-block">
+      <p>Script 9 : Script de météo</p>
+      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+    </div>
+
+    <div class="script-block">
+      <p>Script 10 : Script de menu interactif</p>
+      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+    </div>
   </section>
+
+  <script>
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Script copié !");
+      });
+    }
+  </script>
 
 </body>
 </html>
