@@ -69,61 +69,64 @@
 
     <div class="script-block">
       <p>Script 1 : Wael Hub (keyless)</p>
-      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+      <button class="copy-btn" data-script="ICI">Copier</button>
     </div>
 
     <div class="script-block">
-      <p>Script 2 : Ugly Hub (keylesse)</p>
-      <button class="copy-btn" onclick="copyText('loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/53325754de16c11fbf8bf78101c1c881.lua"))()')">Copier</button>
+      <p>Script 2 : Ugly Hub (keyless)</p>
+      <button class="copy-btn" data-script='loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/53325754de16c11fbf8bf78101c1c881.lua"))()'>Copier</button>
     </div>
 
     <div class="script-block">
       <p>Script 3 : Lennon Hub (keyless)</p>
-      <button class="copy-btn" onclick="copyText('loadstring(game:HttpGet("https://pastefy.app/MJw2J4T6/raw"))()')">Copier</button>
+      <button class="copy-btn" data-script='loadstring(game:HttpGet("https://pastefy.app/MJw2J4T6/raw"))()'>Copier</button>
     </div>
 
     <div class="script-block">
-      <p>Script 4 : Chilli hub (keyless)</p>
-      <button class="copy-btn" onclick="copyText('loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua"))()')">Copier</button>
+      <p>Script 4 : Chilli Hub (keyless)</p>
+      <button class="copy-btn" data-script='loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua"))()'>Copier</button>
     </div>
 
     <div class="script-block">
       <p>Script 5 : Esp1llon Hub (keyless)</p>
-      <button class="copy-btn" onclick="copyText('loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/24a30c9b5fc50ca02c5d6de6f7e5be5e.lua"))()')">Copier</button>
+      <button class="copy-btn" data-script='loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/24a30c9b5fc50ca02c5d6de6f7e5be5e.lua"))()'>Copier</button>
     </div>
 
     <div class="script-block">
       <p>Script 6 : UTC Hub (anti hit no patch)</p>
-      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+      <button class="copy-btn" data-script="ICI">Copier</button>
     </div>
 
     <div class="script-block">
       <p>Script 7 : Trax Spawner</p>
-      <button class="copy-btn" onclick="copyText('loadstring(game:HttpGet("https://gitlab.com/traxscriptss/traxscriptss/-/raw/main/visual2.lua"))()')">Copier</button>
+      <button class="copy-btn" data-script='loadstring(game:HttpGet("https://gitlab.com/traxscriptss/traxscriptss/-/raw/main/visual2.lua"))()'>Copier</button>
     </div>
 
     <div class="script-block">
       <p>Script 8 : Script de chat personnalisé</p>
-      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+      <button class="copy-btn" data-script="ICI">Copier</button>
     </div>
 
     <div class="script-block">
       <p>Script 9 : Script de météo</p>
-      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+      <button class="copy-btn" data-script="ICI">Copier</button>
     </div>
 
     <div class="script-block">
       <p>Script 10 : Script de menu interactif</p>
-      <button class="copy-btn" onclick="copyText('ICI')">Copier</button>
+      <button class="copy-btn" data-script="ICI">Copier</button>
     </div>
   </section>
 
   <script>
-    function copyText(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Script copié !");
+    document.querySelectorAll('.copy-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const script = button.getAttribute('data-script');
+        navigator.clipboard.writeText(script).then(() => {
+          alert("Script copié !");
+        });
       });
-    }
+    });
   </script>
 
 </body>
