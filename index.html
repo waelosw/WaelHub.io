@@ -1,142 +1,238 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Wael Hub - Accueil</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #1f1f1f;
-      color: white;
-      text-align: center;
-    }
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    nav {
-      background-color: #111;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 15px 0;
-    }
+<title>Script Hub Finder</title>
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    nav a:hover {
-      color: #00ff99;
-    }
+<style>
 
-    section {
-      padding: 60px 20px;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500&display=swap');
 
-    .btn {
-      background-color: #00ff99;
-      color: #1f1f1f;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1em;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+body{
+font-family:'Roboto',sans-serif;
+background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);
+color:#e2e8f0;
+min-height:100vh;
+}
 
-    .btn:hover {
-      background-color: #00cc77;
-    }
+.orbitron{
+font-family:'Orbitron',sans-serif;
+}
 
-    form {
-      max-width: 500px;
-      margin: 0 auto;
-      text-align: left;
-      background-color: #2e2e2e;
-      padding: 30px;
-      border-radius: 10px;
-    }
+.glow-text{
+text-shadow:0 0 8px rgba(59,130,246,0.7);
+}
 
-    form label {
-      display: block;
-      margin-bottom: 5px;
-      color: #00ff99;
-    }
+.glow-box{
+box-shadow:0 0 15px rgba(59,130,246,0.5);
+}
 
-    form input, form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 5px;
-      background-color: #1f1f1f;
-      color: white;
-    }
+.input-glow:focus{
+box-shadow:0 0 0 3px rgba(59,130,246,0.5);
+}
 
-    form button {
-      background-color: #00ff99;
-      color: #1f1f1f;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1em;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+.cyber-border{
+position:relative;
+border:1px solid transparent;
+}
 
-    form button:hover {
-      background-color: #00cc77;
-    }
+.cyber-border::before{
+content:'';
+position:absolute;
+inset:0;
+border-radius:.5rem;
+padding:2px;
+background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
+pointer-events:none;
+}
 
-    footer {
-      background-color: #2e2e2e;
-      text-align: center;
-      padding: 30px 20px;
-      font-size: 0.9em;
-    }
-  </style>
+.terminal-text{
+font-family:'Courier New',monospace;
+background-color:rgba(30,41,59,0.7);
+border-left:3px solid #3b82f6;
+}
+
+.modal-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+
+.modal-content{
+background:linear-gradient(135deg,#1e293b 0%,#334155 100%);
+border:2px solid #3b82f6;
+border-radius:1rem;
+padding:2rem;
+max-width:500px;
+width:90%;
+text-align:center;
+box-shadow:0 0 30px rgba(59,130,246,0.5);
+}
+
+</style>
 </head>
-<body>
 
-  <header>
-    <h1>Wael Hub</h1>
-    <p>Site généraliste de jeux vidéo</p>
-  </header>
+<body class="flex flex-col items-center justify-center p-4">
 
-  <nav>
-    <a href="index.html">Accueil</a>
-    <a href="script.html">Script</a>
-    <a href="discord.html">Discord</a>
-  </nav>
+<!-- DISCLAIMER -->
+<div id="disclaimerModal" class="modal-overlay">
+<div class="modal-content">
 
-  <section>
-    <h2>Bienvenue sur Wael Hub</h2>
-    <p>Explore les meilleurs jeux, découvre des scripts, et rejoins notre communauté Discord.</p>
-    <button class="btn">Découvrir</button>
-  </section>
+<i class="fas fa-exclamation-triangle text-yellow-400 text-4xl mb-4"></i>
 
-  <section>
-    <h2>Contacte-moi</h2>
-    <form action="https://formspree.io/f/mgvnygjk" method="POST">
-      <label for="name">Nom :</label>
-      <input type="text" name="name" placeholder="Ton nom" required>
+<h2 class="orbitron text-2xl font-bold mb-4">DISCLAIMER</h2>
 
-      <label for="email">Email :</label>
-      <input type="email" name="email" placeholder="Ton email" required>
+<p class="text-slate-300 text-sm mb-6">
+This website only displays scripts submitted by users.
+Use them at your own risk.
+</p>
 
-      <label for="message">Message :</label>
-      <textarea name="message" rows="5" placeholder="Ton message ici..." required></textarea>
+<button id="acceptDisclaimer"
+class="orbitron bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg">
+I Understand & Continue
+</button>
 
-      <button type="submit">Envoyer</button>
-    </form>
-  </section>
+</div>
+</div>
 
-  <footer>
-    &copy; 2025 Wael Hub. Tous droits réservés.
-  </footer>
+
+<div class="max-w-4xl w-full mx-auto">
+
+<header class="text-center mb-10">
+
+<h1 class="orbitron text-4xl md:text-5xl font-bold glow-text">
+SCRIPT HUB FINDER
+</h1>
+
+<p class="text-slate-300 text-lg">
+Search a Roblox script hub and get its script instantly
+</p>
+
+<div class="flex justify-center mt-6">
+<div class="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+</div>
+
+</header>
+
+
+<main class="cyber-border bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 md:p-8 glow-box">
+
+<div class="mb-8">
+
+<label class="block text-sm font-medium text-slate-300 mb-2 orbitron">
+ENTER HUB NAME
+</label>
+
+<div class="flex gap-4">
+
+<input
+type="text"
+id="hubInput"
+placeholder="ex: chilli hub"
+class="input-glow w-full bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"
+/>
+
+<button
+id="checkBtn"
+class="orbitron bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg">
+SEARCH
+</button>
+
+</div>
+
+</div>
+
+
+<div id="resultsSection" class="hidden">
+
+<div class="terminal-text p-5 rounded-lg">
+
+<pre id="terminalOutput" class="text-green-400 whitespace-pre-wrap"></pre>
+
+</div>
+
+</div>
+
+</main>
+
+
+<footer class="mt-12 text-center text-slate-400 text-sm">
+<p>© 2026 Script Hub Finder</p>
+</footer>
+
+</div>
+
+
+<script>
+
+document.getElementById("acceptDisclaimer").onclick = () =>{
+document.getElementById("disclaimerModal").style.display="none"
+}
+
+const hubs={
+
+"chilli hub":`INSERT SCRIPT HERE`,
+
+"nameless hub":`INSERT SCRIPT HERE`,
+
+"example hub":`INSERT SCRIPT HERE`
+
+}
+
+const btn=document.getElementById("checkBtn")
+const input=document.getElementById("hubInput")
+const terminal=document.getElementById("terminalOutput")
+const results=document.getElementById("resultsSection")
+
+btn.onclick=searchHub
+
+input.addEventListener("keypress",e=>{
+if(e.key==="Enter") searchHub()
+})
+
+function searchHub(){
+
+let name=input.value.toLowerCase().trim()
+
+results.classList.remove("hidden")
+
+terminal.textContent="> Searching hub database...\n"
+
+setTimeout(()=>{
+
+if(hubs[name]){
+
+terminal.textContent+=`> Hub found\n\n`
+terminal.textContent+=hubs[name]
+
+}else{
+
+terminal.textContent+=`> Hub not found\n`
+terminal.textContent+=`No script available for this hub.`
+
+}
+
+},700)
+
+}
+
+</script>
 
 </body>
 </html>
