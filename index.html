@@ -195,19 +195,7 @@ const hubs={
 
 "kurd hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Kurd-Hub-29484"))()`,
 
-"sun hub":`loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/623c61e59524bc04f458c6f6dd2c3f8b.lua"))()``,
-
-"nameless hub":`INSERT SCRIPT HERE`,
-
-"nameless hub":`INSERT SCRIPT HERE`,
-
-"nameless hub":`INSERT SCRIPT HERE`,
-
-"nameless hub":`INSERT SCRIPT HERE`,
-
-"nameless hub":`INSERT SCRIPT HERE`,
-
-"nameless hub":`INSERT SCRIPT HERE`,
+"sun hub":`loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/623c61e59524bc04f458c6f6dd2c3f8b.lua"))()`,
 
 "example hub":`INSERT SCRIPT HERE`
 
@@ -234,10 +222,25 @@ terminal.textContent="> Searching hub database...\n"
 
 setTimeout(()=>{
 
-if(hubs[name]){
+let foundScript=null
+let foundName=null
 
-terminal.textContent+=`> Hub found\n\n`
-terminal.textContent+=hubs[name]
+for(let hub in hubs){
+
+if(hub.includes(name) || name.includes(hub.replace(" hub",""))){
+
+foundScript=hubs[hub]
+foundName=hub
+break
+
+}
+
+}
+
+if(foundScript){
+
+terminal.textContent+=`> Hub found: ${foundName}\n\n`
+terminal.textContent+=foundScript
 
 }else{
 
@@ -254,6 +257,3 @@ terminal.textContent+=`No script available for this hub.`
 
 </body>
 </html>
-
-
-
