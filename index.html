@@ -85,15 +85,6 @@ text-align:center;
 box-shadow:0 0 30px rgba(59,130,246,0.5);
 }
 
-.suggestion{
-cursor:pointer;
-padding:6px;
-}
-
-.suggestion:hover{
-background:#334155;
-}
-
 </style>
 </head>
 
@@ -107,7 +98,8 @@ background:#334155;
 <h2 class="orbitron text-2xl font-bold mb-4">DISCLAIMER</h2>
 
 <p class="text-slate-300 text-sm mb-6">
-Scripts are provided by the community. Use them at your own risk.
+This website only displays scripts submitted by users.
+Use them at your own risk.
 </p>
 
 <button id="acceptDisclaimer"
@@ -163,8 +155,6 @@ SEARCH
 
 </div>
 
-<div id="suggestions" class="text-sm mt-2"></div>
-
 </div>
 
 
@@ -173,8 +163,8 @@ SEARCH
 <div class="terminal-text p-5 rounded-lg relative">
 
 <button id="copyBtn"
-class="absolute top-3 right-3 bg-blue-600 px-3 py-1 rounded text-sm hidden">
-COPY
+class="absolute top-3 right-3 bg-blue-600 text-white text-xs px-3 py-1 rounded hidden">
+COPY SCRIPT
 </button>
 
 <pre id="terminalOutput" class="text-green-400 whitespace-pre-wrap"></pre>
@@ -195,7 +185,7 @@ COPY
 
 <script>
 
-document.getElementById("acceptDisclaimer").onclick=()=>{
+document.getElementById("acceptDisclaimer").onclick = () =>{
 document.getElementById("disclaimerModal").style.display="none"
 }
 
@@ -209,7 +199,9 @@ const hubs={
 
 "kurd hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Kurd-Hub-29484"))()`,
 
-"sun hub":`loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/623c61e59524bc04f458c6f6dd2c3f8b.lua"))()`
+"sun hub":`loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/623c61e59524bc04f458c6f6dd2c3f8b.lua"))()`,
+
+"example hub":`INSERT SCRIPT HERE`
 
 }
 
@@ -217,7 +209,6 @@ const btn=document.getElementById("checkBtn")
 const input=document.getElementById("hubInput")
 const terminal=document.getElementById("terminalOutput")
 const results=document.getElementById("resultsSection")
-const suggestions=document.getElementById("suggestions")
 const copyBtn=document.getElementById("copyBtn")
 
 let currentScript=""
@@ -228,54 +219,15 @@ input.addEventListener("keypress",e=>{
 if(e.key==="Enter") searchHub()
 })
 
-input.addEventListener("input",showSuggestions)
-
-copyBtn.onclick=()=>{
-navigator.clipboard.writeText(currentScript)
-copyBtn.innerText="COPIED"
-setTimeout(()=>copyBtn.innerText="COPY",1500)
-}
-
-function showSuggestions(){
-
-let value=input.value.toLowerCase()
-
-suggestions.innerHTML=""
-
-if(!value) return
-
-for(let hub in hubs){
-
-if(hub.includes(value)){
-
-let div=document.createElement("div")
-div.className="suggestion"
-div.innerText=hub
-
-div.onclick=()=>{
-input.value=hub
-suggestions.innerHTML=""
-}
-
-suggestions.appendChild(div)
-
-}
-
-}
-
-}
-
 async function searchHub(){
 
 let name=input.value.toLowerCase().trim()
 
 results.classList.remove("hidden")
-
 terminal.textContent=""
-copyBtn.style.display="none"
+copyBtn.classList.add("hidden")
 
-await typeText("> Initiating hub search...\n")
-await typeText("> Searching database...\n")
+await typeText("> Searching hub database...\n")
 
 let foundScript=null
 let foundName=null
@@ -296,11 +248,10 @@ if(foundScript){
 
 currentScript=foundScript
 
-await typeText(`> Hub found: ${foundName}\n`)
-await typeText("> Loading script...\n\n")
+await typeText(`> Hub found: ${foundName}\n\n`)
 await typeText(foundScript)
 
-copyBtn.style.display="block"
+copyBtn.classList.remove("hidden")
 
 }else{
 
@@ -335,6 +286,12 @@ resolve()
 
 })
 
+}
+
+copyBtn.onclick=()=>{
+navigator.clipboard.writeText(currentScript)
+copyBtn.innerText="COPIED"
+setTimeout(()=>copyBtn.innerText="COPY SCRIPT",1500)
 }
 
 </script>
