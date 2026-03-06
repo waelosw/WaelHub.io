@@ -232,7 +232,41 @@ const bloxScripts = {
 "doors": "https://bloxscript.net/raw/doors.txt"
 };
 
-// --- Levenshtein distance (correction fautes) ---
+// --- ScriptBlox API ---
+async function searchScriptBlox(query) {
+    try {
+        const res = await fetch(`https://scriptblox.com/api/script/search?q=${encodeURIComponent(query)}`);
+        const data = await res.json();
+
+        if (!data || !data.result || !data.result.scripts || data.result.scripts.length === 0) {
+            return null;
+        }
+
+        const script = data.result.scripts[0];
+
+        if (script.script) {
+            return {
+                name: script.title + " (ScriptBlox)",
+                code: script.script
+            };
+        }
+
+        if (script.rawUrl) {
+            return {
+                name: script.title + " (ScriptBlox)",
+                code: `loadstring(game:HttpGet("${script.rawUrl}"))()`
+            };
+        }
+
+        return null;
+
+    } catch (err) {
+        console.error("ScriptBlox API error:", err);
+        return null;
+    }
+}
+
+// --- Levenshtein (correction fautes) ---
 function levenshtein(a, b) {
 const matrix = Array.from({ length: a.length + 1 }, (_, i) =>
 Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
@@ -340,7 +374,7 @@ await typeText("> Searching hub database...\n")
 let foundScript=null
 let foundName=null
 
-// --- Recherche exacte ---
+// --- Recherche interne ---
 for(let hub in hubs){
 if(hub.includes(name) || name.includes(hub.replace(" hub",""))){
 foundScript=hubs[hub]
@@ -349,7 +383,7 @@ break
 }
 }
 
-// --- Correction orthographique (HUBS) ---
+// --- Correction interne ---
 if (!foundScript) {
 const closestHub = findClosest(name, Object.keys(hubs));
 if (closestHub) {
@@ -369,12 +403,24 @@ break;
 }
 }
 
-// --- Correction orthographique (BloxScript) ---
+// --- Correction BloxScript ---
 if (!foundScript) {
 const closestBlox = findClosest(name, Object.keys(bloxScripts));
 if (closestBlox) {
 foundName = closestBlox + " (BloxScript corrected)";
 foundScript = `loadstring(game:HttpGet("${bloxScripts[closestBlox]}"))()`;
+}
+}
+
+// --- ScriptBlox API ---
+if (!foundScript) {
+await typeText("> Searching ScriptBlox API...\n");
+
+const sb = await searchScriptBlox(name);
+
+if (sb) {
+foundName = sb.name;
+foundScript = sb.code;
 }
 }
 
