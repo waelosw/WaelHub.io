@@ -12,6 +12,7 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500&display=swap');
+
 body{font-family:'Roboto',sans-serif;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#e2e8f0;min-height:100vh;overflow-y:auto;}
 .orbitron{font-family:'Orbitron',sans-serif;}
 .glow-text{text-shadow:0 0 8px rgba(59,130,246,0.7);}
@@ -29,6 +30,7 @@ body{font-family:'Roboto',sans-serif;background:linear-gradient(135deg,#0f172a 0
 .search-animate{animation:pulseSearch 2s infinite;}
 </style>
 </head>
+
 <body class="flex flex-col items-center justify-center p-4">
 
 <!-- DISCLAIMER -->
@@ -57,11 +59,13 @@ I Understand & Continue
 <main class="cyber-border bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 md:p-8 glow-box">
 <div class="mb-8">
 <label class="block text-sm font-medium text-slate-300 mb-2 orbitron">ENTER HUB NAME</label>
+
 <div class="flex flex-col gap-2 relative">
 <input type="text" id="hubInput" placeholder="ex: chilli hub" class="input-glow w-full bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"/>
 <button id="checkBtn" class="orbitron search-animate bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg mt-2">
 SEARCH
 </button>
+<div id="suggestions" class="text-sm mt-1 text-slate-400 absolute top-full left-0 w-full z-10"></div>
 </div>
 </div>
 
@@ -87,62 +91,97 @@ SEARCH
 <script>
 document.getElementById("acceptDisclaimer").onclick = ()=>{ document.getElementById("disclaimerModal").style.display="none" }
 
-// Hubs exacts
+// Hubs
 const hubs={
 "chilli hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Steal-a-Brainrot-KEYLESS-TRUE-THE-BEST-STEAL-A-BRAINROT-SCRIPT-45137"))()`,
 "nameless hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-hub-94511"))()`,
 "lumin hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Steal-a-Brainrot-OP-STEAL-STUFF-43223"))()`,
 "kurd hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Kurd-Hub-29484"))()`,
-"sun hub":`loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/623c61e59524bc04f458c6f6dd2c3f8b.lua"))()`
+"sun hub":`loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/623c61e59524bc04f458c6f6dd2c3f8b.lua"))()`,
+"example hub":`INSERT SCRIPT HERE`
 }
 
 const btn=document.getElementById("checkBtn")
 const input=document.getElementById("hubInput")
 const terminal=document.getElementById("terminalOutput")
 const results=document.getElementById("resultsSection")
+const suggestionsDiv=document.getElementById("suggestions")
 const copyBtn=document.getElementById("copyBtn")
 let currentScript=""
 
-btn.onclick = searchHubExact
-input.addEventListener("keypress", e => { if(e.key==="Enter") searchHubExact() })
+// Recherche intelligente mot par mot
+btn.onclick=searchHubSmart
+input.addEventListener("keypress", e => { if(e.key==="Enter") searchHubSmart() })
+input.addEventListener("input", showSuggestions)
 
-async function searchHubExact(){
-let name = input.value.trim().toLowerCase()
-results.classList.remove("hidden")
-terminal.textContent=""
-copyBtn.style.display="none"
-
-if(hubs[name]){
-currentScript = hubs[name]
-await typeText(`> Hub found: ${name}\n\n`)
-await typeText(currentScript)
-copyBtn.style.display="block"
-}else{
-await typeText("> Hub not found\n")
-await typeText("No script available for this hub.")
+function showSuggestions(){
+  const val=input.value.toLowerCase().trim()
+  suggestionsDiv.innerHTML=""
+  if(!val) return
+  for(let hub in hubs){
+    if(hub.includes(val)){
+      let div=document.createElement("div")
+      div.textContent=hub
+      div.className="suggestion-item"
+      div.onclick=()=>{
+        input.value=hub
+        suggestionsDiv.innerHTML=""
+        searchHubSmart()
+      }
+      suggestionsDiv.appendChild(div)
+    }
+  }
 }
+
+async function searchHubSmart(){
+  let query=input.value.trim().toLowerCase()
+  results.classList.remove("hidden")
+  terminal.textContent=""
+  copyBtn.style.display="none"
+
+  let foundHub=null
+
+  // Mot par mot
+  const words=query.split(" ").filter(w=>w)
+  for(let hub in hubs){
+    let hubWords=hub.split(" ")
+    if(words.every(w=>hubWords.some(hw=>hw===w))){
+      foundHub=hub
+      break
+    }
+  }
+
+  if(foundHub){
+    currentScript=hubs[foundHub]
+    await typeText(`> Hub found: ${foundHub}\n\n`)
+    await typeText(currentScript)
+    copyBtn.style.display="block"
+  }else{
+    await typeText("> Hub not found\n")
+    await typeText("No script available for this hub.")
+  }
 }
 
 function typeText(text){
-return new Promise(resolve=>{
-let i=0
-let interval=setInterval(()=>{
-if(i<text.length){
-terminal.textContent+=text.charAt(i)
-i++
-}else{
-clearInterval(interval)
-resolve()
-}
-},15)
-})
+  return new Promise(resolve=>{
+    let i=0
+    let interval=setInterval(()=>{
+      if(i<text.length){
+        terminal.textContent+=text.charAt(i)
+        i++
+      }else{
+        clearInterval(interval)
+        resolve()
+      }
+    },15)
+  })
 }
 
 copyBtn.onclick = ()=>{
-if(!currentScript) return
-navigator.clipboard.writeText(currentScript)
-copyBtn.innerText="COPIED"
-setTimeout(()=>{ copyBtn.innerText="COPY SCRIPT" },1500)
+  if(!currentScript) return
+  navigator.clipboard.writeText(currentScript)
+  copyBtn.innerText="COPIED"
+  setTimeout(()=>{ copyBtn.innerText="COPY SCRIPT" },1500)
 }
 </script>
 
