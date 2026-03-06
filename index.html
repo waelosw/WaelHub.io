@@ -11,23 +11,90 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500&display=swap');
 
-body{font-family:'Roboto',sans-serif;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#e2e8f0;min-height:100vh;overflow-y:auto;}
+body{
+font-family:'Roboto',sans-serif;
+background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);
+color:#e2e8f0;
+min-height:100vh;
+overflow-y:auto;
+}
+
 .orbitron{font-family:'Orbitron',sans-serif;}
 .glow-text{text-shadow:0 0 8px rgba(59,130,246,0.7);}
 .glow-box{box-shadow:0 0 15px rgba(59,130,246,0.5);}
+
 .input-glow:focus{box-shadow:0 0 0 3px rgba(59,130,246,0.5);}
-.cyber-border{position:relative;border:1px solid transparent;}
-.cyber-border::before{content:'';position:absolute;inset:0;border-radius:.5rem;padding:2px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;}
-.terminal-text{font-family:'Courier New',monospace;background-color:rgba(30,41,59,0.7);border-left:3px solid #3b82f6;position:relative;}
-.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:1000;}
-.modal-content{background:linear-gradient(135deg,#1e293b 0%,#334155 100%);border:2px solid #3b82f6;border-radius:1rem;padding:2rem;max-width:500px;width:90%;text-align:center;box-shadow:0 0 30px rgba(59,130,246,0.5);}
-.suggestion-item{cursor:pointer;padding:2px 4px;border-radius:4px;}
-.suggestion-item:hover{background-color:rgba(59,130,246,0.3);}
-.copy-btn{position:absolute;top:8px;right:8px;background:#3b82f6;color:white;font-size:0.75rem;padding:2px 6px;border-radius:4px;cursor:pointer;display:none;}
-@keyframes pulseSearch{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
-.search-animate{animation:pulseSearch 2s infinite;}
+
+.cyber-border{
+position:relative;
+border:1px solid transparent;
+}
+
+.cyber-border::before{
+content:''; position:absolute; inset:0; border-radius:.5rem; padding:2px;
+background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
+pointer-events:none;
+}
+
+.terminal-text{
+font-family:'Courier New',monospace;
+background-color:rgba(30,41,59,0.7);
+border-left:3px solid #3b82f6;
+position:relative;
+}
+
+.modal-overlay{
+position:fixed;
+top:0; left:0; width:100%; height:100%;
+background:rgba(0,0,0,0.8);
+display:flex; justify-content:center; align-items:center; z-index:1000;
+}
+
+.modal-content{
+background:linear-gradient(135deg,#1e293b 0%,#334155 100%);
+border:2px solid #3b82f6;
+border-radius:1rem;
+padding:2rem;
+max-width:500px;
+width:90%;
+text-align:center;
+box-shadow:0 0 30px rgba(59,130,246,0.5);
+}
+
+.suggestion-item{
+cursor:pointer;
+padding:2px 4px;
+border-radius:4px;
+}
+
+.suggestion-item:hover{
+background-color:rgba(59,130,246,0.3);
+}
+
+.copy-btn{
+position:absolute; top:8px; right:8px;
+background:#3b82f6; color:white; font-size:0.75rem;
+padding:2px 6px; border-radius:4px;
+cursor:pointer;
+display:none;
+}
+
+@keyframes pulseSearch{
+0%{transform:scale(1);}
+50%{transform:scale(1.08);}
+100%{transform:scale(1);}
+}
+
+.search-animate{
+animation:pulseSearch 2s infinite;
+}
+
 </style>
 </head>
 
@@ -36,37 +103,87 @@ body{font-family:'Roboto',sans-serif;background:linear-gradient(135deg,#0f172a 0
 <!-- DISCLAIMER -->
 <div id="disclaimerModal" class="modal-overlay">
 <div class="modal-content">
+
 <i class="fas fa-exclamation-triangle text-yellow-400 text-4xl mb-4"></i>
+
 <h2 class="orbitron text-2xl font-bold mb-4">DISCLAIMER</h2>
+
 <p class="text-slate-300 text-sm mb-6">
-This website only displays scripts submitted by users. Use them at your own risk.
+This website only displays scripts submitted by users.
+Use them at your own risk.
 </p>
-<button id="acceptDisclaimer" class="orbitron bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg">
+
+<button id="acceptDisclaimer"
+class="orbitron bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg">
 I Understand & Continue
 </button>
+
 </div>
 </div>
 
 <div class="max-w-4xl w-full mx-auto">
+
 <header class="text-center mb-10">
-<h1 class="orbitron text-4xl md:text-5xl font-bold glow-text">SCRIPT HUB FINDER</h1>
-<p class="text-slate-300 text-lg">Search a Roblox script hub and get its script instantly</p>
+
+<h1 class="orbitron text-4xl md:text-5xl font-bold glow-text">
+SCRIPT HUB FINDER
+</h1>
+
+<p class="text-slate-300 text-lg">
+Search a Roblox script hub and get its script instantly
+</p>
+
 <div class="flex justify-center mt-6">
 <div class="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
 </div>
+
 </header>
 
 <main class="cyber-border bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 md:p-8 glow-box">
-<div class="mb-8">
-<label class="block text-sm font-medium text-slate-300 mb-2 orbitron">ENTER HUB NAME</label>
 
-<div class="flex flex-col gap-2 relative">
-<input type="text" id="hubInput" placeholder="ex: chilli hub" class="input-glow w-full bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"/>
-<button id="checkBtn" class="orbitron search-animate bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg mt-2">
+<div class="mb-8">
+
+<label class="block text-sm font-medium text-slate-300 mb-2 orbitron">
+ENTER HUB NAME
+</label>
+
+<!-- PC SEARCH -->
+<div class="hidden md:block">
+<div class="flex gap-2">
+<input
+type="text"
+id="hubInput"
+placeholder="ex: chilli hub"
+class="input-glow flex-1 bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"
+/>
+
+<button
+id="checkBtn"
+class="orbitron search-animate bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2">
+<i class="fas fa-search"></i>
 SEARCH
 </button>
-<div id="suggestions" class="text-sm mt-1 text-slate-400 absolute w-full"></div>
 </div>
+
+<div id="suggestions" class="text-sm mt-1 text-slate-400"></div>
+</div>
+
+<!-- MOBILE SEARCH -->
+<div class="md:hidden flex flex-col gap-2">
+<input
+type="text"
+id="hubInputMobile"
+placeholder="ex: chilli hub"
+class="input-glow w-full bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"
+/>
+
+<button
+id="checkBtnMobile"
+class="orbitron bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg">
+SEARCH
+</button>
+</div>
+
 </div>
 
 <div id="resultsSection" class="hidden">
@@ -75,23 +192,30 @@ SEARCH
 <div class="copy-btn" id="copyBtn">COPY SCRIPT</div>
 </div>
 </div>
+
 </main>
 
 <div class="flex justify-center mt-10">
 <a href="https://discord.gg/94BJnurVqX" target="_blank">
-<button class="orbitron bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold py-3 px-8 rounded-lg">JOIN DISCORD</button>
+<button
+class="orbitron bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold py-3 px-8 rounded-lg">
+JOIN DISCORD
+</button>
 </a>
 </div>
 
 <footer class="mt-6 text-center text-slate-400 text-sm">
 <p>© 2026 Script Hub Finder</p>
 </footer>
+
 </div>
 
 <script>
-document.getElementById("acceptDisclaimer").onclick = ()=>{ document.getElementById("disclaimerModal").style.display="none" }
 
-// Hubs exacts
+document.getElementById("acceptDisclaimer").onclick = ()=>{
+document.getElementById("disclaimerModal").style.display="none"
+}
+
 const hubs={
 "chilli hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Steal-a-Brainrot-KEYLESS-TRUE-THE-BEST-STEAL-A-BRAINROT-SCRIPT-45137"))()`,
 "nameless hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-hub-94511"))()`,
@@ -99,91 +223,220 @@ const hubs={
 "kurd hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Kurd-Hub-29484"))()`,
 "sun hub":`loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/623c61e59524bc04f458c6f6dd2c3f8b.lua"))()`,
 "example hub":`INSERT SCRIPT HERE`
+};
+
+// --- BloxScript database ---
+const bloxScripts = {
+"blade ball": "https://bloxscript.net/raw/blade-ball.txt",
+"fruit battlegrounds": "https://bloxscript.net/raw/fruit-battlegrounds.txt",
+"doors": "https://bloxscript.net/raw/doors.txt"
+};
+
+// --- Levenshtein distance (correction fautes) ---
+function levenshtein(a, b) {
+const matrix = Array.from({ length: a.length + 1 }, (_, i) =>
+Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
+);
+
+for (let i = 1; i <= a.length; i++) {
+for (let j = 1; j <= b.length; j++) {
+const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+matrix[i][j] = Math.min(
+matrix[i - 1][j] + 1,
+matrix[i][j - 1] + 1,
+matrix[i - 1][j - 1] + cost
+);
+}
+}
+return matrix[a.length][b.length];
+}
+
+function findClosest(input, list) {
+let best = null;
+let bestScore = Infinity;
+
+for (let item of list) {
+const score = levenshtein(input, item);
+if (score < bestScore) {
+bestScore = score;
+best = item;
+}
+}
+
+return bestScore <= 3 ? best : null;
 }
 
 const btn=document.getElementById("checkBtn")
+const btnMobile=document.getElementById("checkBtnMobile")
+
 const input=document.getElementById("hubInput")
+const inputMobile=document.getElementById("hubInputMobile")
+
 const terminal=document.getElementById("terminalOutput")
 const results=document.getElementById("resultsSection")
 const suggestionsDiv=document.getElementById("suggestions")
 const copyBtn=document.getElementById("copyBtn")
+
 let currentScript=""
 
-// Recherche intelligente mot par mot + suggestions
-btn.onclick = searchHubSmart
-input.addEventListener("input", showSuggestions)
-input.addEventListener("keypress", e => { if(e.key==="Enter") searchHubSmart() })
+btn.onclick=searchHub
+
+btnMobile.onclick=()=>{
+input.value=inputMobile.value
+searchHub()
+}
+
+input.addEventListener("keypress",e=>{
+if(e.key==="Enter") searchHub()
+})
+
+inputMobile.addEventListener("keypress",e=>{
+if(e.key==="Enter"){
+input.value=inputMobile.value
+searchHub()
+}
+})
+
+input.addEventListener("input",showSuggestions)
 
 function showSuggestions(){
-    let value = input.value.trim().toLowerCase()
-    suggestionsDiv.innerHTML=""
-    if(!value) return
 
-    const words = value.split(/\s+/)
-    for(const hub in hubs){
-        const hubWords = hub.split(/\s+/)
-        let match = words.every(w => hubWords.some(hw => hw.includes(w)))
-        if(match){
-            const div = document.createElement("div")
-            div.textContent = hub
-            div.className="suggestion-item"
-            div.onclick = ()=>{ input.value=hub; suggestionsDiv.innerHTML=""; searchHubSmart() }
-            suggestionsDiv.appendChild(div)
-        }
-    }
+let value=input.value.toLowerCase()
+suggestionsDiv.innerHTML=""
+
+if(!value) return
+
+for(let hub in hubs){
+
+if(hub.includes(value)){
+
+let div=document.createElement("div")
+div.textContent=hub
+div.className="suggestion-item"
+
+div.onclick=()=>{
+input.value=hub
+suggestionsDiv.innerHTML=""
 }
 
-async function searchHubSmart(){
-    let name = input.value.trim().toLowerCase()
-    results.classList.remove("hidden")
-    terminal.textContent=""
-    copyBtn.style.display="none"
-    suggestionsDiv.innerHTML=""
+suggestionsDiv.appendChild(div)
 
-    let foundHub = null
-    for(const hub in hubs){
-        const hubWords = hub.split(/\s+/)
-        const inputWords = name.split(/\s+/)
-        let match = inputWords.every(w => hubWords.some(hw => hw.includes(w)))
-        if(match){
-            foundHub = hub
-            break
-        }
-    }
-
-    if(foundHub){
-        currentScript = hubs[foundHub]
-        await typeText(`> Hub found: ${foundHub}\n\n`)
-        await typeText(currentScript)
-        copyBtn.style.display="block"
-    }else{
-        await typeText("> Hub not found\n")
-        await typeText("No script available for this hub.")
-    }
 }
 
-// Typing lettre par lettre
+}
+
+}
+
+async function searchHub(){
+
+let name=input.value.toLowerCase().trim()
+
+results.classList.remove("hidden")
+terminal.textContent=""
+copyBtn.style.display="none"
+
+await typeText("> Searching hub database...\n")
+
+let foundScript=null
+let foundName=null
+
+// --- Recherche exacte ---
+for(let hub in hubs){
+if(hub.includes(name) || name.includes(hub.replace(" hub",""))){
+foundScript=hubs[hub]
+foundName=hub
+break
+}
+}
+
+// --- Correction orthographique (HUBS) ---
+if (!foundScript) {
+const closestHub = findClosest(name, Object.keys(hubs));
+if (closestHub) {
+foundScript = hubs[closestHub];
+foundName = closestHub + " (corrected)";
+}
+}
+
+// --- Recherche BloxScript ---
+if (!foundScript) {
+for (let scriptName in bloxScripts) {
+if (name.includes(scriptName)) {
+foundName = scriptName + " (BloxScript)";
+foundScript = `loadstring(game:HttpGet("${bloxScripts[scriptName]}"))()`;
+break;
+}
+}
+}
+
+// --- Correction orthographique (BloxScript) ---
+if (!foundScript) {
+const closestBlox = findClosest(name, Object.keys(bloxScripts));
+if (closestBlox) {
+foundName = closestBlox + " (BloxScript corrected)";
+foundScript = `loadstring(game:HttpGet("${bloxScripts[closestBlox]}"))()`;
+}
+}
+
+// --- Résultat final ---
+if(foundScript){
+
+currentScript=foundScript
+
+await typeText(`> Hub found: ${foundName}\n\n`)
+await typeText(foundScript)
+
+copyBtn.style.display="block"
+
+}else{
+
+await typeText("> Hub not found\n")
+await typeText("No script available for this hub.")
+
+}
+
+}
+
 function typeText(text){
-    return new Promise(resolve=>{
-        let i=0
-        let interval=setInterval(()=>{
-            if(i<text.length){
-                terminal.textContent+=text.charAt(i)
-                i++
-            }else{
-                clearInterval(interval)
-                resolve()
-            }
-        },15)
-    })
+
+return new Promise(resolve=>{
+
+let i=0
+
+let interval=setInterval(()=>{
+
+if(i<text.length){
+
+terminal.textContent+=text.charAt(i)
+i++
+
+}else{
+
+clearInterval(interval)
+resolve()
+
 }
 
-copyBtn.onclick = ()=>{
-    if(!currentScript) return
-    navigator.clipboard.writeText(currentScript)
-    copyBtn.innerText="COPIED"
-    setTimeout(()=>{ copyBtn.innerText="COPY SCRIPT" },1500)
+},15)
+
+})
+
 }
+
+copyBtn.onclick=()=>{
+
+if(!currentScript) return
+
+navigator.clipboard.writeText(currentScript)
+
+copyBtn.innerText="COPIED"
+
+setTimeout(()=>{
+copyBtn.innerText="COPY SCRIPT"
+},1500)
+
+}
+
 </script>
 
 </body>
