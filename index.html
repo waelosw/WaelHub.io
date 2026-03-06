@@ -163,13 +163,6 @@ class="orbitron bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bol
 SEARCH
 </button>
 
-<a href="https://discord.gg/94BJnurVqX" target="_blank">
-<button
-class="orbitron bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold py-3 px-8 rounded-lg mt-2">
-JOIN DISCORD
-</button>
-</a>
-
 <div id="suggestions" class="text-sm mt-1 text-slate-400"></div>
 
 </div>
@@ -190,8 +183,17 @@ JOIN DISCORD
 
 </main>
 
+<!-- DISCORD BUTTON -->
+<div class="flex justify-center mt-10">
+<a href="https://discord.gg/94BJnurVqX" target="_blank">
+<button
+class="orbitron bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold py-3 px-8 rounded-lg">
+JOIN DISCORD
+</button>
+</a>
+</div>
 
-<footer class="mt-12 text-center text-slate-400 text-sm">
+<footer class="mt-6 text-center text-slate-400 text-sm">
 <p>© 2026 Script Hub Finder</p>
 </footer>
 
@@ -225,73 +227,73 @@ input.addEventListener("keypress",e=>{ if(e.key==="Enter") searchHub() })
 input.addEventListener("input",showSuggestions)
 
 function showSuggestions(){
-  let value=input.value.toLowerCase()
-  suggestionsDiv.innerHTML=""
-  if(!value) return
-  for(let hub in hubs){
-    if(hub.includes(value)){
-      let div=document.createElement("div")
-      div.textContent=hub
-      div.className="suggestion-item"
-      div.onclick=()=>{
-        input.value=hub
-        suggestionsDiv.innerHTML=""
-      }
-      suggestionsDiv.appendChild(div)
-    }
-  }
+let value=input.value.toLowerCase()
+suggestionsDiv.innerHTML=""
+if(!value) return
+for(let hub in hubs){
+if(hub.includes(value)){
+let div=document.createElement("div")
+div.textContent=hub
+div.className="suggestion-item"
+div.onclick=()=>{
+input.value=hub
+suggestionsDiv.innerHTML=""
+}
+suggestionsDiv.appendChild(div)
+}
+}
 }
 
 async function searchHub(){
-  let name=input.value.toLowerCase().trim()
-  results.classList.remove("hidden")
-  terminal.textContent=""
-  copyBtn.style.display="none"
-  
-  await typeText("> Searching hub database...\n")
-  
-  let foundScript=null
-  let foundName=null
-  
-  for(let hub in hubs){
-    if(hub.includes(name) || name.includes(hub.replace(" hub",""))){
-      foundScript=hubs[hub]
-      foundName=hub
-      break
-    }
-  }
-  
-  if(foundScript){
-    currentScript=foundScript
-    await typeText(`> Hub found: ${foundName}\n\n`)
-    await typeText(foundScript)
-    copyBtn.style.display="block"
-  } else {
-    await typeText("> Hub not found\n")
-    await typeText("No script available for this hub.")
-  }
+let name=input.value.toLowerCase().trim()
+results.classList.remove("hidden")
+terminal.textContent=""
+copyBtn.style.display="none"
+
+await typeText("> Searching hub database...\n")
+
+let foundScript=null
+let foundName=null
+
+for(let hub in hubs){
+if(hub.includes(name) || name.includes(hub.replace(" hub",""))){
+foundScript=hubs[hub]
+foundName=hub
+break
+}
+}
+
+if(foundScript){
+currentScript=foundScript
+await typeText(`> Hub found: ${foundName}\n\n`)
+await typeText(foundScript)
+copyBtn.style.display="block"
+} else {
+await typeText("> Hub not found\n")
+await typeText("No script available for this hub.")
+}
 }
 
 function typeText(text){
-  return new Promise(resolve=>{
-    let i=0
-    let interval=setInterval(()=>{
-      if(i<text.length){
-        terminal.textContent+=text.charAt(i)
-        i++
-      } else {
-        clearInterval(interval)
-        resolve()
-      }
-    },15)
-  })
+return new Promise(resolve=>{
+let i=0
+let interval=setInterval(()=>{
+if(i<text.length){
+terminal.textContent+=text.charAt(i)
+i++
+} else {
+clearInterval(interval)
+resolve()
+}
+},15)
+})
 }
 
 copyBtn.onclick=()=>{
-  if(!currentScript) return
-  navigator.clipboard.writeText(currentScript)
-  copyBtn.innerText="COPIED"
-  setTimeout(()=>copyBtn.innerText="COPY SCRIPT",1500)
+if(!currentScript) return
+navigator.clipboard.writeText(currentScript)
+copyBtn.innerText="COPIED"
+setTimeout(()=>copyBtn.innerText="COPY SCRIPT",1500)
 }
 
 </script>
