@@ -100,6 +100,7 @@ animation:pulseSearch 2s infinite;
 
 <body class="flex flex-col items-center justify-center p-4">
 
+<!-- DISCLAIMER -->
 <div id="disclaimerModal" class="modal-overlay">
 <div class="modal-content">
 
@@ -120,7 +121,6 @@ I Understand & Continue
 </div>
 </div>
 
-
 <div class="max-w-4xl w-full mx-auto">
 
 <header class="text-center mb-10">
@@ -139,7 +139,6 @@ Search a Roblox script hub and get its script instantly
 
 </header>
 
-
 <main class="cyber-border bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 md:p-8 glow-box">
 
 <div class="mb-8">
@@ -149,9 +148,8 @@ ENTER HUB NAME
 </label>
 
 <!-- PC SEARCH -->
-<div class="hidden md:block relative">
-<div class="flex items-center gap-2">
-
+<div class="hidden md:block">
+<div class="flex gap-2">
 <input
 type="text"
 id="hubInput"
@@ -165,7 +163,6 @@ class="orbitron search-animate bg-gradient-to-r from-blue-600 to-purple-600 text
 <i class="fas fa-search"></i>
 SEARCH
 </button>
-
 </div>
 
 <div id="suggestions" class="text-sm mt-1 text-slate-400"></div>
@@ -173,7 +170,6 @@ SEARCH
 
 <!-- MOBILE SEARCH -->
 <div class="md:hidden flex flex-col gap-2">
-
 <input
 type="text"
 id="hubInputMobile"
@@ -186,21 +182,15 @@ id="checkBtnMobile"
 class="orbitron bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg">
 SEARCH
 </button>
-
 </div>
 
 </div>
-
 
 <div id="resultsSection" class="hidden">
-
 <div class="terminal-text p-5 rounded-lg">
-
 <pre id="terminalOutput" class="text-green-400 whitespace-pre-wrap"></pre>
 <div class="copy-btn" id="copyBtn">COPY SCRIPT</div>
-
 </div>
-
 </div>
 
 </main>
@@ -222,19 +212,164 @@ JOIN DISCORD
 
 <script>
 
-document.getElementById("acceptDisclaimer").onclick = () =>{
+document.getElementById("acceptDisclaimer").onclick = ()=>{
 document.getElementById("disclaimerModal").style.display="none"
 }
 
-/* sync mobile input */
-const mobileInput=document.getElementById("hubInputMobile")
-const mobileBtn=document.getElementById("checkBtnMobile")
+const hubs={
+"chilli hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Steal-a-Brainrot-KEYLESS-TRUE-THE-BEST-STEAL-A-BRAINROT-SCRIPT-45137"))()`,
+"nameless hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-hub-94511"))()`,
+"lumin hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Steal-a-Brainrot-OP-STEAL-STUFF-43223"))()`,
+"kurd hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Kurd-Hub-29484"))()`,
+"sun hub":`loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/623c61e59524bc04f458c6f6dd2c3f8b.lua"))()`,
+"example hub":`INSERT SCRIPT HERE`
+}
 
-if(mobileBtn){
-mobileBtn.onclick=()=>{
-document.getElementById("hubInput").value=mobileInput.value
+const btn=document.getElementById("checkBtn")
+const btnMobile=document.getElementById("checkBtnMobile")
+
+const input=document.getElementById("hubInput")
+const inputMobile=document.getElementById("hubInputMobile")
+
+const terminal=document.getElementById("terminalOutput")
+const results=document.getElementById("resultsSection")
+const suggestionsDiv=document.getElementById("suggestions")
+const copyBtn=document.getElementById("copyBtn")
+
+let currentScript=""
+
+btn.onclick=searchHub
+
+btnMobile.onclick=()=>{
+input.value=inputMobile.value
 searchHub()
 }
+
+input.addEventListener("keypress",e=>{
+if(e.key==="Enter") searchHub()
+})
+
+inputMobile.addEventListener("keypress",e=>{
+if(e.key==="Enter"){
+input.value=inputMobile.value
+searchHub()
+}
+})
+
+input.addEventListener("input",showSuggestions)
+
+function showSuggestions(){
+
+let value=input.value.toLowerCase()
+suggestionsDiv.innerHTML=""
+
+if(!value) return
+
+for(let hub in hubs){
+
+if(hub.includes(value)){
+
+let div=document.createElement("div")
+div.textContent=hub
+div.className="suggestion-item"
+
+div.onclick=()=>{
+input.value=hub
+suggestionsDiv.innerHTML=""
+}
+
+suggestionsDiv.appendChild(div)
+
+}
+
+}
+
+}
+
+async function searchHub(){
+
+let name=input.value.toLowerCase().trim()
+
+results.classList.remove("hidden")
+terminal.textContent=""
+copyBtn.style.display="none"
+
+await typeText("> Searching hub database...\n")
+
+let foundScript=null
+let foundName=null
+
+for(let hub in hubs){
+
+if(hub.includes(name) || name.includes(hub.replace(" hub",""))){
+
+foundScript=hubs[hub]
+foundName=hub
+break
+
+}
+
+}
+
+if(foundScript){
+
+currentScript=foundScript
+
+await typeText(`> Hub found: ${foundName}\n\n`)
+await typeText(foundScript)
+
+copyBtn.style.display="block"
+
+}else{
+
+await typeText("> Hub not found\n")
+await typeText("No script available for this hub.")
+
+}
+
+}
+
+function typeText(text){
+
+return new Promise(resolve=>{
+
+let i=0
+
+let interval=setInterval(()=>{
+
+if(i<text.length){
+
+terminal.textContent+=text.charAt(i)
+i++
+
+}else{
+
+clearInterval(interval)
+resolve()
+
+}
+
+},15)
+
+})
+
+}
+
+copyBtn.onclick=()=>{
+
+if(!currentScript) return
+
+navigator.clipboard.writeText(currentScript)
+
+copyBtn.innerText="COPIED"
+
+setTimeout(()=>{
+copyBtn.innerText="COPY SCRIPT"
+},1500)
+
 }
 
 </script>
+
+</body>
+</html>
