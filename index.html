@@ -22,21 +22,11 @@ min-height:100vh;
 overflow-y:auto;
 }
 
-.orbitron{
-font-family:'Orbitron',sans-serif;
-}
+.orbitron{font-family:'Orbitron',sans-serif;}
+.glow-text{text-shadow:0 0 8px rgba(59,130,246,0.7);}
+.glow-box{box-shadow:0 0 15px rgba(59,130,246,0.5);}
 
-.glow-text{
-text-shadow:0 0 8px rgba(59,130,246,0.7);
-}
-
-.glow-box{
-box-shadow:0 0 15px rgba(59,130,246,0.5);
-}
-
-.input-glow:focus{
-box-shadow:0 0 0 3px rgba(59,130,246,0.5);
-}
+.input-glow:focus{box-shadow:0 0 0 3px rgba(59,130,246,0.5);}
 
 .cyber-border{
 position:relative;
@@ -89,7 +79,8 @@ background-color:rgba(59,130,246,0.3);
 
 .copy-btn{
 position:absolute; top:8px; right:8px;
-background:#3b82f6; color:white; font-size:0.75rem; padding:2px 6px; border-radius:4px;
+background:#3b82f6; color:white; font-size:0.75rem;
+padding:2px 6px; border-radius:4px;
 cursor:pointer;
 display:none;
 }
@@ -109,7 +100,6 @@ animation:pulseSearch 2s infinite;
 
 <body class="flex flex-col items-center justify-center p-4">
 
-<!-- DISCLAIMER -->
 <div id="disclaimerModal" class="modal-overlay">
 <div class="modal-content">
 
@@ -158,9 +148,8 @@ Search a Roblox script hub and get its script instantly
 ENTER HUB NAME
 </label>
 
-<!-- SEARCH BAR MODIFIÉE -->
-<div class="relative">
-
+<!-- PC SEARCH -->
+<div class="hidden md:block relative">
 <div class="flex items-center gap-2">
 
 <input
@@ -173,15 +162,30 @@ class="input-glow flex-1 bg-slate-700/50 border border-slate-600 rounded-lg py-3
 <button
 id="checkBtn"
 class="orbitron search-animate bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2">
-
 <i class="fas fa-search"></i>
 SEARCH
-
 </button>
 
 </div>
 
 <div id="suggestions" class="text-sm mt-1 text-slate-400"></div>
+</div>
+
+<!-- MOBILE SEARCH -->
+<div class="md:hidden flex flex-col gap-2">
+
+<input
+type="text"
+id="hubInputMobile"
+placeholder="ex: chilli hub"
+class="input-glow w-full bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"
+/>
+
+<button
+id="checkBtnMobile"
+class="orbitron bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg">
+SEARCH
+</button>
 
 </div>
 
@@ -217,102 +221,20 @@ JOIN DISCORD
 </div>
 
 <script>
+
 document.getElementById("acceptDisclaimer").onclick = () =>{
 document.getElementById("disclaimerModal").style.display="none"
 }
 
-const hubs={
-"chilli hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Steal-a-Brainrot-KEYLESS-TRUE-THE-BEST-STEAL-A-BRAINROT-SCRIPT-45137"))()`,
-"nameless hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-hub-94511"))()`,
-"lumin hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Steal-a-Brainrot-OP-STEAL-STUFF-43223"))()`,
-"kurd hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Kurd-Hub-29484"))()`,
-"sun hub":`loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/623c61e59524bc04f458c6f6dd2c3f8b.lua"))()`,
-"example hub":`INSERT SCRIPT HERE`
-}
+/* sync mobile input */
+const mobileInput=document.getElementById("hubInputMobile")
+const mobileBtn=document.getElementById("checkBtnMobile")
 
-const btn=document.getElementById("checkBtn")
-const input=document.getElementById("hubInput")
-const terminal=document.getElementById("terminalOutput")
-const results=document.getElementById("resultsSection")
-const suggestionsDiv=document.getElementById("suggestions")
-const copyBtn=document.getElementById("copyBtn")
-let currentScript=""
-
-btn.onclick=searchHub
-input.addEventListener("keypress",e=>{ if(e.key==="Enter") searchHub() })
-input.addEventListener("input",showSuggestions)
-
-function showSuggestions(){
-let value=input.value.toLowerCase()
-suggestionsDiv.innerHTML=""
-if(!value) return
-for(let hub in hubs){
-if(hub.includes(value)){
-let div=document.createElement("div")
-div.textContent=hub
-div.className="suggestion-item"
-div.onclick=()=>{
-input.value=hub
-suggestionsDiv.innerHTML=""
+if(mobileBtn){
+mobileBtn.onclick=()=>{
+document.getElementById("hubInput").value=mobileInput.value
+searchHub()
 }
-suggestionsDiv.appendChild(div)
-}
-}
-}
-
-async function searchHub(){
-let name=input.value.toLowerCase().trim()
-results.classList.remove("hidden")
-terminal.textContent=""
-copyBtn.style.display="none"
-
-await typeText("> Searching hub database...\n")
-
-let foundScript=null
-let foundName=null
-
-for(let hub in hubs){
-if(hub.includes(name) || name.includes(hub.replace(" hub",""))){
-foundScript=hubs[hub]
-foundName=hub
-break
-}
-}
-
-if(foundScript){
-currentScript=foundScript
-await typeText(`> Hub found: ${foundName}\n\n`)
-await typeText(foundScript)
-copyBtn.style.display="block"
-} else {
-await typeText("> Hub not found\n")
-await typeText("No script available for this hub.")
-}
-}
-
-function typeText(text){
-return new Promise(resolve=>{
-let i=0
-let interval=setInterval(()=>{
-if(i<text.length){
-terminal.textContent+=text.charAt(i)
-i++
-} else {
-clearInterval(interval)
-resolve()
-}
-},15)
-})
-}
-
-copyBtn.onclick=()=>{
-if(!currentScript) return
-navigator.clipboard.writeText(currentScript)
-copyBtn.innerText="COPIED"
-setTimeout(()=>copyBtn.innerText="COPY SCRIPT",1500)
 }
 
 </script>
-
-</body>
-</html>
