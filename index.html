@@ -94,8 +94,6 @@ cursor:pointer;
 display:none;
 }
 
-/* SEARCH BUTTON ANIMATION */
-
 @keyframes pulseSearch{
 0%{transform:scale(1);}
 50%{transform:scale(1.08);}
@@ -160,20 +158,28 @@ Search a Roblox script hub and get its script instantly
 ENTER HUB NAME
 </label>
 
-<div class="flex flex-col gap-2 relative">
+<!-- SEARCH BAR MODIFIÉE -->
+<div class="relative">
+
+<div class="flex items-center gap-2">
 
 <input
 type="text"
 id="hubInput"
 placeholder="ex: chilli hub"
-class="input-glow w-full bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"
+class="input-glow flex-1 bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"
 />
 
 <button
 id="checkBtn"
-class="orbitron search-animate bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg mt-2">
+class="orbitron search-animate bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2">
+
+<i class="fas fa-search"></i>
 SEARCH
+
 </button>
+
+</div>
 
 <div id="suggestions" class="text-sm mt-1 text-slate-400"></div>
 
