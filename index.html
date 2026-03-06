@@ -22,6 +22,8 @@ body{font-family:'Roboto',sans-serif;background:linear-gradient(135deg,#0f172a 0
 .terminal-text{font-family:'Courier New',monospace;background-color:rgba(30,41,59,0.7);border-left:3px solid #3b82f6;position:relative;}
 .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:1000;}
 .modal-content{background:linear-gradient(135deg,#1e293b 0%,#334155 100%);border:2px solid #3b82f6;border-radius:1rem;padding:2rem;max-width:500px;width:90%;text-align:center;box-shadow:0 0 30px rgba(59,130,246,0.5);}
+.suggestion-item{cursor:pointer;padding:2px 4px;border-radius:4px;}
+.suggestion-item:hover{background-color:rgba(59,130,246,0.3);}
 .copy-btn{position:absolute;top:8px;right:8px;background:#3b82f6;color:white;font-size:0.75rem;padding:2px 6px;border-radius:4px;cursor:pointer;display:none;}
 @keyframes pulseSearch{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
 .search-animate{animation:pulseSearch 2s infinite;}
@@ -55,21 +57,9 @@ I Understand & Continue
 <main class="cyber-border bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 md:p-8 glow-box">
 <div class="mb-8">
 <label class="block text-sm font-medium text-slate-300 mb-2 orbitron">ENTER HUB NAME</label>
-
-<!-- PC SEARCH -->
-<div class="hidden md:block">
-<div class="flex gap-2">
-<input type="text" id="hubInput" placeholder="ex: chilli hub" class="input-glow flex-1 bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"/>
-<button id="checkBtn" class="orbitron search-animate bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2">
-<i class="fas fa-search"></i> SEARCH
-</button>
-</div>
-</div>
-
-<!-- MOBILE SEARCH -->
-<div class="md:hidden flex flex-col gap-2">
-<input type="text" id="hubInputMobile" placeholder="ex: chilli hub" class="input-glow w-full bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"/>
-<button id="checkBtnMobile" class="orbitron bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg">
+<div class="flex flex-col gap-2 relative">
+<input type="text" id="hubInput" placeholder="ex: chilli hub" class="input-glow w-full bg-slate-700/50 border border-slate-600 rounded-lg py-3 px-4 text-white"/>
+<button id="checkBtn" class="orbitron search-animate bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-8 rounded-lg mt-2">
 SEARCH
 </button>
 </div>
@@ -95,12 +85,10 @@ SEARCH
 </div>
 
 <script>
-document.getElementById("acceptDisclaimer").onclick = ()=>{
-document.getElementById("disclaimerModal").style.display="none"
-}
+document.getElementById("acceptDisclaimer").onclick = ()=>{ document.getElementById("disclaimerModal").style.display="none" }
 
-// Définition exacte des hubs
-const hubs = {
+// Hubs exacts
+const hubs={
 "chilli hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Steal-a-Brainrot-KEYLESS-TRUE-THE-BEST-STEAL-A-BRAINROT-SCRIPT-45137"))()`,
 "nameless hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-hub-94511"))()`,
 "lumin hub":`loadstring(game:HttpGet("https://rawscripts.net/raw/Steal-a-Brainrot-OP-STEAL-STUFF-43223"))()`,
@@ -109,16 +97,16 @@ const hubs = {
 }
 
 const btn=document.getElementById("checkBtn")
-const btnMobile=document.getElementById("checkBtnMobile")
 const input=document.getElementById("hubInput")
-const inputMobile=document.getElementById("hubInputMobile")
 const terminal=document.getElementById("terminalOutput")
 const results=document.getElementById("resultsSection")
 const copyBtn=document.getElementById("copyBtn")
-
 let currentScript=""
 
-function searchHubExact(){
+btn.onclick = searchHubExact
+input.addEventListener("keypress", e => { if(e.key==="Enter") searchHubExact() })
+
+async function searchHubExact(){
 let name = input.value.trim().toLowerCase()
 results.classList.remove("hidden")
 terminal.textContent=""
@@ -126,33 +114,36 @@ copyBtn.style.display="none"
 
 if(hubs[name]){
 currentScript = hubs[name]
-terminal.textContent = `> Hub found: ${name}\n\n${currentScript}`
+await typeText(`> Hub found: ${name}\n\n`)
+await typeText(currentScript)
 copyBtn.style.display="block"
 }else{
-terminal.textContent = "> Hub not found\nNo script available for this hub."
+await typeText("> Hub not found\n")
+await typeText("No script available for this hub.")
 }
 }
 
-// PC SEARCH
-btn.onclick = searchHubExact
-input.addEventListener("keypress",e=>{ if(e.key==="Enter") searchHubExact() })
-
-// MOBILE SEARCH
-btnMobile.onclick = ()=>{
-input.value=inputMobile.value
-searchHubExact()
+function typeText(text){
+return new Promise(resolve=>{
+let i=0
+let interval=setInterval(()=>{
+if(i<text.length){
+terminal.textContent+=text.charAt(i)
+i++
+}else{
+clearInterval(interval)
+resolve()
 }
-inputMobile.addEventListener("keypress",e=>{
-if(e.key==="Enter"){ input.value=inputMobile.value; searchHubExact() }
+},15)
 })
+}
 
 copyBtn.onclick = ()=>{
 if(!currentScript) return
 navigator.clipboard.writeText(currentScript)
 copyBtn.innerText="COPIED"
-setTimeout(()=>{copyBtn.innerText="COPY SCRIPT"},1500)
+setTimeout(()=>{ copyBtn.innerText="COPY SCRIPT" },1500)
 }
-
 </script>
 
 </body>
