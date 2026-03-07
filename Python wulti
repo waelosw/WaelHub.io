@@ -8,6 +8,21 @@ def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 def banner():
+
+    # ====== TABLEAU AJOUTÉ (RIEN SUPPRIMÉ) ======
+    print(Fore.RED + "┌──────────────────────────────────────────┐")
+    print(Fore.RED + "│              WULTI TOOLBOX               │")
+    print(Fore.RED + "├──────────────────────────────────────────┤")
+    print(Fore.RED + "│   Option   │           Fonction          │")
+    print(Fore.RED + "├────────────┼─────────────────────────────┤")
+    print(Fore.RED + "│    [1]     │        IP Lookup            │")
+    print(Fore.RED + "│    [2]     │  Discord Webhook Sender     │")
+    print(Fore.RED + "│    [3]     │          Ping Tool          │")
+    print(Fore.RED + "│    [4]     │      Username Checker       │")
+    print(Fore.RED + "│    [0]     │            Exit             │")
+    print(Fore.RED + "└────────────┴─────────────────────────────┘\n")
+
+    # ====== TON BANNER ORIGINAL, INTACT ======
     print(Fore.RED + """
 ██╗    ██╗██╗   ██╗██╗  ████████╗██╗
 ██║    ██║██║   ██║██║  ╚══██╔══╝██║
