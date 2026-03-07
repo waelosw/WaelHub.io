@@ -107,7 +107,7 @@ def webhook_panel():
         clear()
         print(Fore.RED + "===== WEBHOOK PANEL =====")
         print("[1] Send a message")
-        print("[2] Send up to 5 messages")
+        print("[2] Spam messages")
         print("[0] Back")
         print("=========================\n")
 
@@ -128,12 +128,12 @@ def webhook_panel():
         elif choice == "2":
             url = input("Webhook URL: ")
             message = input("Message: ")
-            amount = input("How many messages (max 5): ")
+            amount = input("How many messages (max 150): ")
 
             try:
                 amount = int(amount)
-                if amount < 1 or amount > 5:
-                    print("You must choose between 1 and 5.")
+                if amount < 1 or amount > 150:
+                    print("You must choose between 1 and 150.")
                     input("Press Enter to continue...")
                     continue
             except:
