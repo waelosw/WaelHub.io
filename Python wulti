@@ -33,7 +33,7 @@ def banner():
         "╔══════════════════════╗",
         "║     [1] IP Lookup    ║",
         "╠══════════════════════╣",
-        "║ Analyse une adresse IP║",
+        "║Analyse une adresse IP║",
         "╚══════════════════════╝"
     ]
 
@@ -81,9 +81,9 @@ def banner():
 
     t6 = [
         "╔══════════════════════╗",
-        "║  [6] Username Check ║",
+        "║  [6] Username Check  ║",
         "╠══════════════════════╣",
-        "║ Vérifier un pseudo  ║",
+        "║ Vérifier un pseudo   ║",
         "╚══════════════════════╝"
     ]
 
