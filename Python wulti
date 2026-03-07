@@ -31,25 +31,25 @@ def banner():
 
     t1 = [
         "╔══════════════════════╗",
-        "║     [1] IP Lookup     ║",
+        "║     [1] IP Lookup    ║",
         "╠══════════════════════╣",
-        "║ Analyse une adresse IP║",
+        "║ Analyse une IP       ║",
         "╚══════════════════════╝"
     ]
 
     t2 = [
         "╔══════════════════════╗",
-        "║      [2] GeoIP+       ║",
+        "║      [2] GeoIP+      ║",
         "╠══════════════════════╣",
-        "║ Géolocalisation       ║",
+        "║ Géolocalisation      ║",
         "╚══════════════════════╝"
     ]
 
     t3 = [
         "╔══════════════════════╗",
-        "║    [3] Host Lookup    ║",
+        "║    [3] Host Lookup   ║",
         "╠══════════════════════╣",
-        "║ Analyse un site web   ║",
+        "║ Analyse un site web  ║",
         "╚══════════════════════╝"
     ]
 
@@ -65,25 +65,25 @@ def banner():
 
     t4 = [
         "╔══════════════════════╗",
-        "║   [4] Webhook Panel   ║",
+        "║   [4] Webhook Panel  ║",
         "╠══════════════════════╣",
-        "║ Envoyer via webhook   ║",
+        "║ Envoyer via webhook  ║",
         "╚══════════════════════╝"
     ]
 
     t5 = [
         "╔══════════════════════╗",
-        "║     [5] Ping Tool     ║",
+        "║     [5] Ping Tool    ║",
         "╠══════════════════════╣",
-        "║ Tester la latence     ║",
+        "║ Tester la latence    ║",
         "╚══════════════════════╝"
     ]
 
     t6 = [
         "╔══════════════════════╗",
-        "║  [6] Username Check   ║",
+        "║  [6] Username Check  ║",
         "╠══════════════════════╣",
-        "║ Vérifier un pseudo    ║",
+        "║ Vérifier un pseudo   ║",
         "╚══════════════════════╝"
     ]
 
