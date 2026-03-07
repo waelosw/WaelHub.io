@@ -1,11 +1,14 @@
 import os
 import requests
+from colorama import Fore, Style, init
+
+init(autoreset=True)
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 def banner():
-    print("""
+    print(Fore.RED + """
 ██╗    ██╗██╗   ██╗██╗  ████████╗██╗
 ██║    ██║██║   ██║██║  ╚══██╔══╝██║
 ██║ █╗ ██║██║   ██║██║     ██║   ██║
@@ -14,13 +17,13 @@ def banner():
  ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝   ╚═╝
 
 ====== WULTI TOOLBOX ======
-[1] IP Lookup
-[2] Discord Webhook Sender
-[3] Ping Tool
-[4] Username Checker
-
-[0] Exit
 """)
+
+    print(Fore.RED + "[1] IP Lookup")
+    print(Fore.RED + "[2] Discord Webhook Sender")
+    print(Fore.RED + "[3] Ping Tool")
+    print(Fore.RED + "[4] Username Checker")
+    print(Fore.RED + "\n[0] Exit\n")
 
 def ip_lookup():
     ip = input("Enter IP: ")
@@ -28,13 +31,13 @@ def ip_lookup():
         r = requests.get(f"http://ip-api.com/json/{ip}")
         data = r.json()
 
-        print("\n===== RESULT =====")
+        print(Fore.RED + "\n===== RESULT =====")
         print("IP:", data["query"])
         print("Country:", data["country"])
         print("City:", data["city"])
         print("ISP:", data["isp"])
         print("Timezone:", data["timezone"])
-        print("==================\n")
+        print(Fore.RED + "==================\n")
 
     except:
         print("Error while searching IP.")
@@ -43,9 +46,7 @@ def webhook_sender():
     url = input("Webhook URL: ")
     message = input("Message: ")
 
-    data = {
-        "content": message
-    }
+    data = {"content": message}
 
     try:
         requests.post(url, json=data)
@@ -69,14 +70,14 @@ def username_checker():
     for site, url in sites.items():
         r = requests.get(url)
         if r.status_code == 200:
-            print(f"{site}: FOUND -> {url}")
+            print(Fore.RED + f"{site}: FOUND -> {url}")
         else:
             print(f"{site}: Not found")
 
 while True:
     clear()
     banner()
-    choice = input("[WULTI] Select Tool > ")
+    choice = input(Fore.RED + "[WULTI] Select Tool > ")
 
     if choice == "1":
         ip_lookup()
