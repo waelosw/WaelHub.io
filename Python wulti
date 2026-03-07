@@ -8,6 +8,10 @@ init(autoreset=True)
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
+# ============================================================
+#                         INTERFACE
+# ============================================================
+
 def banner():
 
     print(Fore.RED + """
@@ -21,52 +25,57 @@ def banner():
 ====== WULTI TOOLBOX ======
 """)
 
+    # -------------------- LIGNE 1 --------------------
+
     # 1 — IP LOOKUP
     print(Fore.RED + "┌──────────────────────────────┐")
-    print(Fore.RED + "│ [1] IP Lookup                │")
-    print(Fore.RED + "└──────────────────────────────┘")
-    print("   Analyse une adresse IP\n")
+    print(Fore.RED + "│          [1] IP Lookup       │")
+    print(Fore.RED + "├──────────────────────────────┤")
+    print(Fore.RED + "│ Analyse une adresse IP       │")
+    print(Fore.RED + "└──────────────────────────────┘\n")
 
     # 2 — GEOIP+
     print(Fore.RED + "┌──────────────────────────────┐")
-    print(Fore.RED + "│ [2] GeoIP+ (détaillé)        │")
-    print(Fore.RED + "└──────────────────────────────┘")
-    print("   Géolocalisation complète d'une IP\n")
+    print(Fore.RED + "│     [2] GeoIP+ (détaillé)    │")
+    print(Fore.RED + "├──────────────────────────────┤")
+    print(Fore.RED + "│ Géolocalisation complète     │")
+    print(Fore.RED + "└──────────────────────────────┘\n")
 
     # 3 — HOST LOOKUP
     print(Fore.RED + "┌──────────────────────────────┐")
-    print(Fore.RED + "│ [3] Host Lookup              │")
-    print(Fore.RED + "└──────────────────────────────┘")
-    print("   Analyse un site et son hébergeur\n")
+    print(Fore.RED + "│        [3] Host Lookup       │")
+    print(Fore.RED + "├──────────────────────────────┤")
+    print(Fore.RED + "│ Analyse un site web          │")
+    print(Fore.RED + "└──────────────────────────────┘\n")
+
+    # -------------------- LIGNE 2 --------------------
 
     # 4 — WEBHOOK PANEL
     print(Fore.RED + "┌──────────────────────────────┐")
-    print(Fore.RED + "│ [4] Webhook Panel            │")
-    print(Fore.RED + "└──────────────────────────────┘")
-    print("   Envoyer des messages via webhook\n")
+    print(Fore.RED + "│       [4] Webhook Panel      │")
+    print(Fore.RED + "├──────────────────────────────┤")
+    print(Fore.RED + "│ Envoyer via webhook          │")
+    print(Fore.RED + "└──────────────────────────────┘\n")
 
     # 5 — PING TOOL
     print(Fore.RED + "┌──────────────────────────────┐")
-    print(Fore.RED + "│ [5] Ping Tool                │")
-    print(Fore.RED + "└──────────────────────────────┘")
-    print("   Tester la latence d'un hôte\n")
+    print(Fore.RED + "│         [5] Ping Tool        │")
+    print(Fore.RED + "├──────────────────────────────┤")
+    print(Fore.RED + "│ Tester la latence            │")
+    print(Fore.RED + "└──────────────────────────────┘\n")
 
     # 6 — USERNAME CHECKER
     print(Fore.RED + "┌──────────────────────────────┐")
-    print(Fore.RED + "│ [6] Username Checker         │")
-    print(Fore.RED + "└──────────────────────────────┘")
-    print("   Vérifier un pseudo sur plusieurs sites\n")
-
-    # 0 — EXIT
-    print(Fore.RED + "┌──────────────────────────────┐")
-    print(Fore.RED + "│ [0] Exit                     │")
-    print(Fore.RED + "└──────────────────────────────┘")
-    print("   Quitter WULTI TOOLBOX\n")
+    print(Fore.RED + "│     [6] Username Checker     │")
+    print(Fore.RED + "├──────────────────────────────┤")
+    print(Fore.RED + "│ Vérifier un pseudo           │")
+    print(Fore.RED + "└──────────────────────────────┘\n")
 
 
-# ============================
-#        IP Lookup
-# ============================
+# ============================================================
+#                         FONCTIONS
+# ============================================================
+
 def ip_lookup():
     ip = input("Enter IP: ")
     try:
@@ -74,20 +83,14 @@ def ip_lookup():
         data = r.json()
 
         print(Fore.RED + "\n===== RESULT =====")
-        print("IP:", data.get("query"))
-        print("Country:", data.get("country"))
-        print("City:", data.get("city"))
-        print("ISP:", data.get("isp"))
-        print("Timezone:", data.get("timezone"))
+        for k, v in data.items():
+            print(f"{k}: {v}")
         print(Fore.RED + "==================\n")
 
     except:
         print("Error while searching IP.")
 
 
-# ============================
-#        GeoIP+
-# ============================
 def geoip_plus():
     ip = input("Enter IP: ")
     try:
@@ -95,17 +98,14 @@ def geoip_plus():
         data = r.json()
 
         print(Fore.RED + "\n===== GEOIP+ =====")
-        for key, value in data.items():
-            print(f"{key}: {value}")
+        for k, v in data.items():
+            print(f"{k}: {v}")
         print(Fore.RED + "==================\n")
 
     except:
         print("Error while searching GeoIP.")
 
 
-# ============================
-#        Host Lookup
-# ============================
 def host_lookup():
     site = input("Enter website (ex: google.com): ")
 
@@ -117,23 +117,14 @@ def host_lookup():
         print(Fore.RED + "\n===== HOST LOOKUP =====")
         print("Website:", site)
         print("IP:", ip)
-        print("Country:", data.get("country"))
-        print("Region:", data.get("regionName"))
-        print("City:", data.get("city"))
-        print("ISP:", data.get("isp"))
-        print("ORG:", data.get("org"))
-        print("AS:", data.get("as"))
-        print("Lat:", data.get("lat"))
-        print("Lon:", data.get("lon"))
+        for k, v in data.items():
+            print(f"{k}: {v}")
         print(Fore.RED + "=======================\n")
 
     except:
         print("Error while resolving host.")
 
 
-# ============================
-#        Webhook Panel (limité)
-# ============================
 def webhook_panel():
     while True:
         clear()
@@ -147,62 +138,36 @@ def webhook_panel():
 
         if choice == "1":
             url = input("Webhook URL: ")
-            message = input("Message: ")
-
-            try:
-                requests.post(url, json={"content": message})
-                print("Message sent!")
-            except:
-                print("Error sending message.")
-
-            input("Press Enter to continue...")
+            msg = input("Message: ")
+            requests.post(url, json={"content": msg})
+            print("Message sent!")
+            input("Press Enter...")
 
         elif choice == "2":
             url = input("Webhook URL: ")
-            message = input("Message: ")
-            amount = input("How many messages (max 5): ")
+            msg = input("Message: ")
+            amount = int(input("How many messages (max 5): "))
 
-            try:
-                amount = int(amount)
-                if amount < 1 or amount > 5:
-                    print("You must choose between 1 and 5.")
-                    input("Press Enter to continue...")
-                    continue
-            except:
-                print("Invalid number.")
-                input("Press Enter to continue...")
+            if amount < 1 or amount > 5:
+                print("Choose between 1 and 5.")
+                input("Press Enter...")
                 continue
 
-            print(f"Sending {amount} messages...")
-            for i in range(amount):
-                try:
-                    requests.post(url, json={"content": message})
-                except:
-                    print("Error sending one of the messages.")
-                    break
+            for _ in range(amount):
+                requests.post(url, json={"content": msg})
 
             print("Done!")
-            input("Press Enter to continue...")
+            input("Press Enter...")
 
         elif choice == "0":
             break
 
-        else:
-            print("Invalid option.")
-            input("Press Enter to continue...")
 
-
-# ============================
-#        Ping Tool
-# ============================
 def ping_tool():
     host = input("IP or website: ")
     os.system(f"ping {host}")
 
 
-# ============================
-#        Username Checker
-# ============================
 def username_checker():
     username = input("Username: ")
 
@@ -213,51 +178,40 @@ def username_checker():
     }
 
     for site, url in sites.items():
-        try:
-            r = requests.get(url)
-            if r.status_code == 200:
-                print(Fore.RED + f"{site}: FOUND -> {url}")
-            else:
-                print(f"{site}: Not found")
-        except:
-            print(f"{site}: Error checking")
+        r = requests.get(url)
+        if r.status_code == 200:
+            print(Fore.RED + f"{site}: FOUND -> {url}")
+        else:
+            print(f"{site}: Not found")
 
 
-# ============================
-#        MAIN MENU
-# ============================
+# ============================================================
+#                         MAIN MENU
+# ============================================================
+
 while True:
     clear()
     banner()
     choice = input(Fore.RED + "[WULTI] Select Tool > ")
 
     if choice == "1":
-        ip_lookup()
-        input("Press Enter to continue...")
+        ip_lookup(); input("Press Enter...")
 
     elif choice == "2":
-        geoip_plus()
-        input("Press Enter to continue...")
+        geoip_plus(); input("Press Enter...")
 
     elif choice == "3":
-        host_lookup()
-        input("Press Enter to continue...")
+        host_lookup(); input("Press Enter...")
 
     elif choice == "4":
         webhook_panel()
 
     elif choice == "5":
-        ping_tool()
-        input("Press Enter to continue...")
+        ping_tool(); input("Press Enter...")
 
     elif choice == "6":
-        username_checker()
-        input("Press Enter to continue...")
-
-    elif choice == "0":
-        print("Goodbye!")
-        break
+        username_checker(); input("Press Enter...")
 
     else:
         print("Invalid option.")
-        input("Press Enter to continue...")
+        input("Press Enter...")
