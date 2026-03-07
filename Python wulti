@@ -21,15 +21,47 @@ def banner():
 ====== WULTI TOOLBOX ======
 """)
 
-    print(Fore.RED + "┌──────────────────────────────────────────────┐")
-    print(Fore.RED + "│ [1] IP Lookup                               │")
-    print(Fore.RED + "│ [2] GeoIP+ (détaillé)                       │")
-    print(Fore.RED + "│ [3] Host Lookup                             │")
-    print(Fore.RED + "│ [4] Webhook Panel                           │")
-    print(Fore.RED + "│ [5] Ping Tool                               │")
-    print(Fore.RED + "│ [6] Username Checker                        │")
-    print(Fore.RED + "│ [0] Exit                                    │")
-    print(Fore.RED + "└──────────────────────────────────────────────┘\n")
+    # 1 — IP LOOKUP
+    print(Fore.RED + "┌──────────────────────────────┐")
+    print(Fore.RED + "│ [1] IP Lookup                │")
+    print(Fore.RED + "└──────────────────────────────┘")
+    print("   Analyse une adresse IP\n")
+
+    # 2 — GEOIP+
+    print(Fore.RED + "┌──────────────────────────────┐")
+    print(Fore.RED + "│ [2] GeoIP+ (détaillé)        │")
+    print(Fore.RED + "└──────────────────────────────┘")
+    print("   Géolocalisation complète d'une IP\n")
+
+    # 3 — HOST LOOKUP
+    print(Fore.RED + "┌──────────────────────────────┐")
+    print(Fore.RED + "│ [3] Host Lookup              │")
+    print(Fore.RED + "└──────────────────────────────┘")
+    print("   Analyse un site et son hébergeur\n")
+
+    # 4 — WEBHOOK PANEL
+    print(Fore.RED + "┌──────────────────────────────┐")
+    print(Fore.RED + "│ [4] Webhook Panel            │")
+    print(Fore.RED + "└──────────────────────────────┘")
+    print("   Envoyer des messages via webhook\n")
+
+    # 5 — PING TOOL
+    print(Fore.RED + "┌──────────────────────────────┐")
+    print(Fore.RED + "│ [5] Ping Tool                │")
+    print(Fore.RED + "└──────────────────────────────┘")
+    print("   Tester la latence d'un hôte\n")
+
+    # 6 — USERNAME CHECKER
+    print(Fore.RED + "┌──────────────────────────────┐")
+    print(Fore.RED + "│ [6] Username Checker         │")
+    print(Fore.RED + "└──────────────────────────────┘")
+    print("   Vérifier un pseudo sur plusieurs sites\n")
+
+    # 0 — EXIT
+    print(Fore.RED + "┌──────────────────────────────┐")
+    print(Fore.RED + "│ [0] Exit                     │")
+    print(Fore.RED + "└──────────────────────────────┘")
+    print("   Quitter WULTI TOOLBOX\n")
 
 
 # ============================
@@ -42,11 +74,11 @@ def ip_lookup():
         data = r.json()
 
         print(Fore.RED + "\n===== RESULT =====")
-        print("IP:", data["query"])
-        print("Country:", data["country"])
-        print("City:", data["city"])
-        print("ISP:", data["isp"])
-        print("Timezone:", data["timezone"])
+        print("IP:", data.get("query"))
+        print("Country:", data.get("country"))
+        print("City:", data.get("city"))
+        print("ISP:", data.get("isp"))
+        print("Timezone:", data.get("timezone"))
         print(Fore.RED + "==================\n")
 
     except:
@@ -100,14 +132,14 @@ def host_lookup():
 
 
 # ============================
-#        Webhook Panel (safe)
+#        Webhook Panel (limité)
 # ============================
 def webhook_panel():
     while True:
         clear()
         print(Fore.RED + "===== WEBHOOK PANEL =====")
         print("[1] Send a message")
-        print("[2] Spam messages")
+        print("[2] Send up to 5 messages")
         print("[0] Back")
         print("=========================\n")
 
@@ -128,12 +160,12 @@ def webhook_panel():
         elif choice == "2":
             url = input("Webhook URL: ")
             message = input("Message: ")
-            amount = input("How many messages (max 150): ")
+            amount = input("How many messages (max 5): ")
 
             try:
                 amount = int(amount)
-                if amount < 1 or amount > 150:
-                    print("You must choose between 1 and 150.")
+                if amount < 1 or amount > 5:
+                    print("You must choose between 1 and 5.")
                     input("Press Enter to continue...")
                     continue
             except:
@@ -181,11 +213,14 @@ def username_checker():
     }
 
     for site, url in sites.items():
-        r = requests.get(url)
-        if r.status_code == 200:
-            print(Fore.RED + f"{site}: FOUND -> {url}")
-        else:
-            print(f"{site}: Not found")
+        try:
+            r = requests.get(url)
+            if r.status_code == 200:
+                print(Fore.RED + f"{site}: FOUND -> {url}")
+            else:
+                print(f"{site}: Not found")
+        except:
+            print(f"{site}: Error checking")
 
 
 # ============================
