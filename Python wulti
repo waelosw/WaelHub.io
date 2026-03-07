@@ -27,11 +27,11 @@ def banner():
     print(Fore.RED + "│ │               WULTI TOOLBOX              │ │")
     print(Fore.RED + "│ └──────────────────────────────────────────┘ │")
     print(Fore.RED + "├──────────────────────────────────────────────┤")
-    print(Fore.RED + "│ [1] IP Lookup                               │")
-    print(Fore.RED + "│ [2] Discord Webhook Sender                  │")
-    print(Fore.RED + "│ [3] Ping Tool                               │")
-    print(Fore.RED + "│ [4] Username Checker                        │")
-    print(Fore.RED + "│ [0] Exit                                    │")
+    print(Fore.RED + "│ [1] IP Lookup                                │")
+    print(Fore.RED + "│ [2] Discord Webhook Sender                   │")
+    print(Fore.RED + "│ [3] Ping Tool                                │")
+    print(Fore.RED + "│ [4] Username Checker                         │")
+    print(Fore.RED + "│ [0] Exit                                     │")
     print(Fore.RED + "└──────────────────────────────────────────────┘\n")
 
 
