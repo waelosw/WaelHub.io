@@ -76,10 +76,7 @@ async def geo(ctx, adresse_ip):
 @bot.command()
 async def host(ctx, site):
     try:
-        # Résolution DNS → obtenir l'IP du site
         ip = socket.gethostbyname(site)
-
-        # API pour obtenir les infos de l'IP
         url = f"http://ip-api.com/json/{ip}?fields=66846719"
         data = requests.get(url).json()
 
@@ -106,6 +103,33 @@ async def host(ctx, site):
         await ctx.send("❌ Site invalide ou introuvable.")
     except Exception:
         await ctx.send("⚠️ Une erreur est survenue.")
+
+# ============================
+#      COMMANDE !userinfo
+# ============================
+@bot.command()
+async def userinfo(ctx, member: discord.Member = None):
+    member = member or ctx.author
+
+    embed = discord.Embed(
+        title=f"Informations sur {member}",
+        color=discord.Color.blue()
+    )
+
+    if member.avatar:
+        embed.set_thumbnail(url=member.avatar.url)
+
+    embed.add_field(name="🆔 ID", value=member.id, inline=False)
+    embed.add_field(name="📅 Compte créé le", value=member.created_at.strftime("%d/%m/%Y"), inline=True)
+    embed.add_field(name="📥 A rejoint le serveur le", value=member.joined_at.strftime("%d/%m/%Y"), inline=True)
+
+    roles = [role.mention for role in member.roles if role.name != "@everyone"]
+    embed.add_field(name="🎭 Rôles", value=", ".join(roles) if roles else "Aucun rôle", inline=False)
+
+    embed.add_field(name="🤖 Bot ?", value="Oui" if member.bot else "Non", inline=True)
+    embed.add_field(name="📡 Statut", value=str(member.status).capitalize(), inline=True)
+
+    await ctx.send(embed=embed)
 
 # ============================
 #         TOKEN DU BOT
