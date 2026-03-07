@@ -1,137 +1,184 @@
-import discord
-from discord.ext import commands
+import os
 import requests
-import socket  # ← nécessaire pour !host
+from colorama import Fore, Style, init
+import socket
 
-bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
+init(autoreset=True)
 
-@bot.event
-async def on_ready():
-    print(f"WULTI Bot connecté en tant que {bot.user}")
+def clear():
+    os.system("cls" if os.name == "nt" else "clear")
+
+def banner():
+
+    print(Fore.RED + """
+██╗    ██╗██╗   ██╗██╗  ████████╗██╗
+██║    ██║██║   ██║██║  ╚══██╔══╝██║
+██║ █╗ ██║██║   ██║██║     ██║   ██║
+██║███╗██║██║   ██║██║     ██║   ██║
+╚███╔███╔╝╚██████╔╝███████╗██║   ██║
+ ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝   ╚═╝
+
+====== WULTI TOOLBOX ======
+""")
+
+    print(Fore.RED + "┌──────────────────────────────────────────────┐")
+    print(Fore.RED + "│ [1] IP Lookup                               │")
+    print(Fore.RED + "│ [2] GeoIP+ (détaillé)                       │")
+    print(Fore.RED + "│ [3] Host Lookup                             │")
+    print(Fore.RED + "│ [4] Discord Webhook Sender                  │")
+    print(Fore.RED + "│ [5] Ping Tool                               │")
+    print(Fore.RED + "│ [6] Username Checker                        │")
+    print(Fore.RED + "│ [0] Exit                                    │")
+    print(Fore.RED + "└──────────────────────────────────────────────┘\n")
+
 
 # ============================
-#        COMMANDE !ip
+#        IP Lookup
 # ============================
-@bot.command()
-async def ip(ctx, adresse_ip):
+def ip_lookup():
+    ip = input("Enter IP: ")
     try:
-        url = f"http://ip-api.com/json/{adresse_ip}"
-        data = requests.get(url).json()
+        r = requests.get(f"http://ip-api.com/json/{ip}")
+        data = r.json()
 
-        if data["status"] == "fail":
-            await ctx.send("❌ IP invalide ou introuvable.")
-            return
+        print(Fore.RED + "\n===== RESULT =====")
+        print("IP:", data["query"])
+        print("Country:", data["country"])
+        print("City:", data["city"])
+        print("ISP:", data["isp"])
+        print("Timezone:", data["timezone"])
+        print(Fore.RED + "==================\n")
 
-        message = (
-            f"🌍 **Informations sur l'IP : {adresse_ip}**\n"
-            f"• Pays : {data.get('country', 'N/A')}\n"
-            f"• Région : {data.get('regionName', 'N/A')}\n"
-            f"• Ville : {data.get('city', 'N/A')}\n"
-            f"• FAI : {data.get('isp', 'N/A')}\n"
-            f"• Latitude : {data.get('lat', 'N/A')}\n"
-            f"• Longitude : {data.get('lon', 'N/A')}\n"
-        )
+    except:
+        print("Error while searching IP.")
 
-        await ctx.send(message)
-
-    except Exception:
-        await ctx.send("⚠️ Une erreur est survenue.")
 
 # ============================
-#       COMMANDE !geo
+#        GeoIP+
 # ============================
-@bot.command()
-async def geo(ctx, adresse_ip):
+def geoip_plus():
+    ip = input("Enter IP: ")
     try:
-        url = f"http://ip-api.com/json/{adresse_ip}?fields=66846719"
-        data = requests.get(url).json()
+        r = requests.get(f"http://ip-api.com/json/{ip}?fields=66846719")
+        data = r.json()
 
-        if data["status"] == "fail":
-            await ctx.send("❌ IP invalide ou introuvable.")
-            return
+        print(Fore.RED + "\n===== GEOIP+ =====")
+        for key, value in data.items():
+            print(f"{key}: {value}")
+        print(Fore.RED + "==================\n")
 
-        message = (
-            f"🛰️ **Géolocalisation détaillée : {adresse_ip}**\n"
-            f"• Pays : {data.get('country', 'N/A')}\n"
-            f"• Code pays : {data.get('countryCode', 'N/A')}\n"
-            f"• Région : {data.get('regionName', 'N/A')}\n"
-            f"• Ville : {data.get('city', 'N/A')}\n"
-            f"• Code postal : {data.get('zip', 'N/A')}\n"
-            f"• Fuseau horaire : {data.get('timezone', 'N/A')}\n"
-            f"• FAI : {data.get('isp', 'N/A')}\n"
-            f"• Organisation : {data.get('org', 'N/A')}\n"
-            f"• AS : {data.get('as', 'N/A')}\n"
-            f"• Latitude : {data.get('lat', 'N/A')}\n"
-            f"• Longitude : {data.get('lon', 'N/A')}\n"
-        )
+    except:
+        print("Error while searching GeoIP.")
 
-        await ctx.send(message)
-
-    except Exception:
-        await ctx.send("⚠️ Une erreur est survenue.")
 
 # ============================
-#       COMMANDE !host
+#        Host Lookup
 # ============================
-@bot.command()
-async def host(ctx, site):
+def host_lookup():
+    site = input("Enter website (ex: google.com): ")
+
     try:
         ip = socket.gethostbyname(site)
-        url = f"http://ip-api.com/json/{ip}?fields=66846719"
-        data = requests.get(url).json()
+        r = requests.get(f"http://ip-api.com/json/{ip}?fields=66846719")
+        data = r.json()
 
-        if data["status"] == "fail":
-            await ctx.send("❌ Impossible d'obtenir les informations de cet hôte.")
-            return
+        print(Fore.RED + "\n===== HOST LOOKUP =====")
+        print("Website:", site)
+        print("IP:", ip)
+        print("Country:", data.get("country"))
+        print("Region:", data.get("regionName"))
+        print("City:", data.get("city"))
+        print("ISP:", data.get("isp"))
+        print("ORG:", data.get("org"))
+        print("AS:", data.get("as"))
+        print("Lat:", data.get("lat"))
+        print("Lon:", data.get("lon"))
+        print(Fore.RED + "=======================\n")
 
-        message = (
-            f"🖥️ **Informations sur l'hôte : {site}**\n"
-            f"• IP : {ip}\n"
-            f"• Pays : {data.get('country', 'N/A')}\n"
-            f"• Région : {data.get('regionName', 'N/A')}\n"
-            f"• Ville : {data.get('city', 'N/A')}\n"
-            f"• FAI : {data.get('isp', 'N/A')}\n"
-            f"• Organisation : {data.get('org', 'N/A')}\n"
-            f"• AS : {data.get('as', 'N/A')}\n"
-            f"• Latitude : {data.get('lat', 'N/A')}\n"
-            f"• Longitude : {data.get('lon', 'N/A')}\n"
-        )
+    except:
+        print("Error while resolving host.")
 
-        await ctx.send(message)
-
-    except socket.gaierror:
-        await ctx.send("❌ Site invalide ou introuvable.")
-    except Exception:
-        await ctx.send("⚠️ Une erreur est survenue.")
 
 # ============================
-#      COMMANDE !userinfo
+#        Webhook Sender
 # ============================
-@bot.command()
-async def userinfo(ctx, member: discord.Member = None):
-    member = member or ctx.author
+def webhook_sender():
+    url = input("Webhook URL: ")
+    message = input("Message: ")
 
-    embed = discord.Embed(
-        title=f"Informations sur {member}",
-        color=discord.Color.blue()
-    )
+    data = {"content": message}
 
-    if member.avatar:
-        embed.set_thumbnail(url=member.avatar.url)
+    try:
+        requests.post(url, json=data)
+        print("Message sent!")
+    except:
+        print("Error sending webhook.")
 
-    embed.add_field(name="🆔 ID", value=member.id, inline=False)
-    embed.add_field(name="📅 Compte créé le", value=member.created_at.strftime("%d/%m/%Y"), inline=True)
-    embed.add_field(name="📥 A rejoint le serveur le", value=member.joined_at.strftime("%d/%m/%Y"), inline=True)
-
-    roles = [role.mention for role in member.roles if role.name != "@everyone"]
-    embed.add_field(name="🎭 Rôles", value=", ".join(roles) if roles else "Aucun rôle", inline=False)
-
-    embed.add_field(name="🤖 Bot ?", value="Oui" if member.bot else "Non", inline=True)
-    embed.add_field(name="📡 Statut", value=str(member.status).capitalize(), inline=True)
-
-    await ctx.send(embed=embed)
 
 # ============================
-#         TOKEN DU BOT
+#        Ping Tool
 # ============================
-bot.run("TON_TOKEN_ICI")
+def ping_tool():
+    host = input("IP or website: ")
+    os.system(f"ping {host}")
+
+
+# ============================
+#        Username Checker
+# ============================
+def username_checker():
+    username = input("Username: ")
+
+    sites = {
+        "GitHub": f"https://github.com/{username}",
+        "Reddit": f"https://www.reddit.com/user/{username}",
+        "TikTok": f"https://www.tiktok.com/@{username}"
+    }
+
+    for site, url in sites.items():
+        r = requests.get(url)
+        if r.status_code == 200:
+            print(Fore.RED + f"{site}: FOUND -> {url}")
+        else:
+            print(f"{site}: Not found")
+
+
+# ============================
+#        MAIN MENU
+# ============================
+while True:
+    clear()
+    banner()
+    choice = input(Fore.RED + "[WULTI] Select Tool > ")
+
+    if choice == "1":
+        ip_lookup()
+        input("Press Enter to continue...")
+
+    elif choice == "2":
+        geoip_plus()
+        input("Press Enter to continue...")
+
+    elif choice == "3":
+        host_lookup()
+        input("Press Enter to continue...")
+
+    elif choice == "4":
+        webhook_sender()
+        input("Press Enter to continue...")
+
+    elif choice == "5":
+        ping_tool()
+        input("Press Enter to continue...")
+
+    elif choice == "6":
+        username_checker()
+        input("Press Enter to continue...")
+
+    elif choice == "0":
+        print("Goodbye!")
+        break
+
+    else:
+        print("Invalid option.")
+        input("Press Enter to continue...")
