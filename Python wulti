@@ -9,28 +9,30 @@ def clear():
 
 def banner():
 
-    # ====== GRAND WULTI AGRANDI ======
-    print(Fore.RED + r"""
-██╗       ██╗   ██╗ ██╗   ████████╗ ██╗
-██║       ██║   ██║ ██║   ╚══██╔══╝ ██║
-██║   █╗  ██║   ██║ ██║      ██║    ██║
-██║ ████╗ ██║   ██║ ██║      ██║    ██║
-╚███╔███╔╝╚██████╔╝ ███████╗ ██║    ██║
- ╚══╝╚══╝   ╚═════╝  ╚══════╝ ╚═╝    ╚═╝
+    # ====== TON WULTI ORIGINAL (RESTAURÉ) ======
+    print(Fore.RED + """
+██╗    ██╗██╗   ██╗██╗  ████████╗██╗
+██║    ██║██║   ██║██║  ╚══██╔══╝██║
+██║ █╗ ██║██║   ██║██║     ██║   ██║
+██║███╗██║██║   ██║██║     ██║   ██║
+╚███╔███╔╝╚██████╔╝███████╗██║   ██║
+ ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝   ╚═╝
+
+====== WULTI TOOLBOX ======
 """)
 
-    # ====== DOUBLE BORDURE STYLE NEROSINT ======
-    print(Fore.RED + "┌──────────────────────────────────────────────────────────┐")
-    print(Fore.RED + "│ ┌──────────────────────────────────────────────────────┐ │")
-    print(Fore.RED + "│ │                    WULTI TOOLBOX                    │ │")
-    print(Fore.RED + "│ └──────────────────────────────────────────────────────┘ │")
-    print(Fore.RED + "├──────────────────────────────────────────────────────────┤")
-    print(Fore.RED + "│ [1] IP Lookup                                           │")
-    print(Fore.RED + "│ [2] Discord Webhook Sender                              │")
-    print(Fore.RED + "│ [3] Ping Tool                                           │")
-    print(Fore.RED + "│ [4] Username Checker                                    │")
-    print(Fore.RED + "│ [0] Exit                                                │")
-    print(Fore.RED + "└──────────────────────────────────────────────────────────┘\n")
+    # ====== DOUBLE BORDURE PROPRE, ALIGNÉE, SANS BUG ======
+    print(Fore.RED + "┌──────────────────────────────────────────────┐")
+    print(Fore.RED + "│ ┌──────────────────────────────────────────┐ │")
+    print(Fore.RED + "│ │               WULTI TOOLBOX              │ │")
+    print(Fore.RED + "│ └──────────────────────────────────────────┘ │")
+    print(Fore.RED + "├──────────────────────────────────────────────┤")
+    print(Fore.RED + "│ [1] IP Lookup                               │")
+    print(Fore.RED + "│ [2] Discord Webhook Sender                  │")
+    print(Fore.RED + "│ [3] Ping Tool                               │")
+    print(Fore.RED + "│ [4] Username Checker                        │")
+    print(Fore.RED + "│ [0] Exit                                    │")
+    print(Fore.RED + "└──────────────────────────────────────────────┘\n")
 
 
 def ip_lookup():
