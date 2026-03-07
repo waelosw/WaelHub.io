@@ -9,20 +9,7 @@ def clear():
 
 def banner():
 
-    # ====== TABLEAU AJOUTÉ (RIEN SUPPRIMÉ) ======
-    print(Fore.RED + "┌──────────────────────────────────────────┐")
-    print(Fore.RED + "│              WULTI TOOLBOX               │")
-    print(Fore.RED + "├──────────────────────────────────────────┤")
-    print(Fore.RED + "│   Option   │           Fonction          │")
-    print(Fore.RED + "├────────────┼─────────────────────────────┤")
-    print(Fore.RED + "│    [1]     │        IP Lookup            │")
-    print(Fore.RED + "│    [2]     │  Discord Webhook Sender     │")
-    print(Fore.RED + "│    [3]     │          Ping Tool          │")
-    print(Fore.RED + "│    [4]     │      Username Checker       │")
-    print(Fore.RED + "│    [0]     │            Exit             │")
-    print(Fore.RED + "└────────────┴─────────────────────────────┘\n")
-
-    # ====== TON BANNER ORIGINAL, INTACT ======
+    # ====== TON GRAND WULTI (INCHANGÉ) ======
     print(Fore.RED + """
 ██╗    ██╗██╗   ██╗██╗  ████████╗██╗
 ██║    ██║██║   ██║██║  ╚══██╔══╝██║
@@ -34,11 +21,17 @@ def banner():
 ====== WULTI TOOLBOX ======
 """)
 
-    print(Fore.RED + "[1] IP Lookup")
-    print(Fore.RED + "[2] Discord Webhook Sender")
-    print(Fore.RED + "[3] Ping Tool")
-    print(Fore.RED + "[4] Username Checker")
-    print(Fore.RED + "\n[0] Exit\n")
+    # ====== TABLEAU AUTOUR DES OPTIONS (AJOUTÉ) ======
+    print(Fore.RED + "┌──────────────────────────────────────────┐")
+    print(Fore.RED + "│   Option   │           Fonction          │")
+    print(Fore.RED + "├────────────┼─────────────────────────────┤")
+    print(Fore.RED + "│    [1]     │        IP Lookup            │")
+    print(Fore.RED + "│    [2]     │  Discord Webhook Sender     │")
+    print(Fore.RED + "│    [3]     │          Ping Tool          │")
+    print(Fore.RED + "│    [4]     │      Username Checker       │")
+    print(Fore.RED + "│    [0]     │            Exit             │")
+    print(Fore.RED + "└────────────┴─────────────────────────────┘\n")
+
 
 def ip_lookup():
     ip = input("Enter IP: ")
