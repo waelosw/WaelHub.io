@@ -1,0 +1,103 @@
+import os
+import requests
+
+def clear():
+    os.system("cls" if os.name == "nt" else "clear")
+
+def banner():
+    print("""
+██╗    ██╗██╗   ██╗██╗  ████████╗██╗
+██║    ██║██║   ██║██║  ╚══██╔══╝██║
+██║ █╗ ██║██║   ██║██║     ██║   ██║
+██║███╗██║██║   ██║██║     ██║   ██║
+╚███╔███╔╝╚██████╔╝███████╗██║   ██║
+ ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝   ╚═╝
+
+====== WULTI TOOLBOX ======
+[1] IP Lookup
+[2] Discord Webhook Sender
+[3] Ping Tool
+[4] Username Checker
+
+[0] Exit
+""")
+
+def ip_lookup():
+    ip = input("Enter IP: ")
+    try:
+        r = requests.get(f"http://ip-api.com/json/{ip}")
+        data = r.json()
+
+        print("\n===== RESULT =====")
+        print("IP:", data["query"])
+        print("Country:", data["country"])
+        print("City:", data["city"])
+        print("ISP:", data["isp"])
+        print("Timezone:", data["timezone"])
+        print("==================\n")
+
+    except:
+        print("Error while searching IP.")
+
+def webhook_sender():
+    url = input("Webhook URL: ")
+    message = input("Message: ")
+
+    data = {
+        "content": message
+    }
+
+    try:
+        requests.post(url, json=data)
+        print("Message sent!")
+    except:
+        print("Error sending webhook.")
+
+def ping_tool():
+    host = input("IP or website: ")
+    os.system(f"ping {host}")
+
+def username_checker():
+    username = input("Username: ")
+
+    sites = {
+        "GitHub": f"https://github.com/{username}",
+        "Reddit": f"https://www.reddit.com/user/{username}",
+        "TikTok": f"https://www.tiktok.com/@{username}"
+    }
+
+    for site, url in sites.items():
+        r = requests.get(url)
+        if r.status_code == 200:
+            print(f"{site}: FOUND -> {url}")
+        else:
+            print(f"{site}: Not found")
+
+while True:
+    clear()
+    banner()
+    choice = input("[WULTI] Select Tool > ")
+
+    if choice == "1":
+        ip_lookup()
+        input("Press Enter to continue...")
+
+    elif choice == "2":
+        webhook_sender()
+        input("Press Enter to continue...")
+
+    elif choice == "3":
+        ping_tool()
+        input("Press Enter to continue...")
+
+    elif choice == "4":
+        username_checker()
+        input("Press Enter to continue...")
+
+    elif choice == "0":
+        print("Goodbye!")
+        break
+
+    else:
+        print("Invalid option.")
+        input("Press Enter to continue...")
