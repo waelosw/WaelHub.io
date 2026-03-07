@@ -25,7 +25,7 @@ def banner():
     print(Fore.RED + "│ [1] IP Lookup                               │")
     print(Fore.RED + "│ [2] GeoIP+ (détaillé)                       │")
     print(Fore.RED + "│ [3] Host Lookup                             │")
-    print(Fore.RED + "│ [4] Discord Webhook Sender                  │")
+    print(Fore.RED + "│ [4] Webhook Panel                           │")
     print(Fore.RED + "│ [5] Ping Tool                               │")
     print(Fore.RED + "│ [6] Username Checker                        │")
     print(Fore.RED + "│ [0] Exit                                    │")
@@ -100,19 +100,64 @@ def host_lookup():
 
 
 # ============================
-#        Webhook Sender
+#        Webhook Panel (safe)
 # ============================
-def webhook_sender():
-    url = input("Webhook URL: ")
-    message = input("Message: ")
+def webhook_panel():
+    while True:
+        clear()
+        print(Fore.RED + "===== WEBHOOK PANEL =====")
+        print("[1] Send a message")
+        print("[2] Send up to 5 messages")
+        print("[0] Back")
+        print("=========================\n")
 
-    data = {"content": message}
+        choice = input("Select option > ")
 
-    try:
-        requests.post(url, json=data)
-        print("Message sent!")
-    except:
-        print("Error sending webhook.")
+        if choice == "1":
+            url = input("Webhook URL: ")
+            message = input("Message: ")
+
+            try:
+                requests.post(url, json={"content": message})
+                print("Message sent!")
+            except:
+                print("Error sending message.")
+
+            input("Press Enter to continue...")
+
+        elif choice == "2":
+            url = input("Webhook URL: ")
+            message = input("Message: ")
+            amount = input("How many messages (max 5): ")
+
+            try:
+                amount = int(amount)
+                if amount < 1 or amount > 5:
+                    print("You must choose between 1 and 5.")
+                    input("Press Enter to continue...")
+                    continue
+            except:
+                print("Invalid number.")
+                input("Press Enter to continue...")
+                continue
+
+            print(f"Sending {amount} messages...")
+            for i in range(amount):
+                try:
+                    requests.post(url, json={"content": message})
+                except:
+                    print("Error sending one of the messages.")
+                    break
+
+            print("Done!")
+            input("Press Enter to continue...")
+
+        elif choice == "0":
+            break
+
+        else:
+            print("Invalid option.")
+            input("Press Enter to continue...")
 
 
 # ============================
@@ -164,8 +209,7 @@ while True:
         input("Press Enter to continue...")
 
     elif choice == "4":
-        webhook_sender()
-        input("Press Enter to continue...")
+        webhook_panel()
 
     elif choice == "5":
         ping_tool()
