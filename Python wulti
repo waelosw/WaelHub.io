@@ -64,7 +64,8 @@ def banner():
                 sys.stdout.write(code + line + "\n")
 
             sys.stdout.flush()
-            time.sleep(0.08)
+            time.sleep(0.20)  # ← vitesse plus lente
+
 
 
 
