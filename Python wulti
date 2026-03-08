@@ -5,30 +5,33 @@ import socket
 import threading
 import time
 import sys
-import ctypes
 
 init(autoreset=True)
 
 # ============================================================
-#                 WINDOWS COLOR CONTROL (MODE A)
+#                 ANIMATION RGB DU BANNER SEULEMENT
 # ============================================================
 
-STD_OUTPUT_HANDLE = -11
-handle = ctypes.windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
-
-def set_color(color_id):
-    ctypes.windll.kernel32.SetConsoleTextAttribute(handle, color_id)
-
-def rgb_cycle():
-    # Palette chaude SANS couleurs blanches
-    # Rouge foncé (4), Rouge clair (12), Orange-ish (6), Jaune (14)
-    # MAIS on évite 14 trop longtemps (risque de blanc selon thème)
-    palette = [4, 12, 6, 12]
+def animate_banner(texte):
+    couleurs = [
+        (255, 0, 0),
+        (255, 40, 0),
+        (255, 80, 0),
+        (255, 120, 0),
+        (255, 80, 0),
+        (255, 40, 0),
+    ]
 
     while True:
-        for color in palette:
-            set_color(color)
-            time.sleep(0.15)
+        for r, g, b in couleurs:
+            code = f"\033[38;2;{r};{g};{b}m"
+            sys.stdout.write("\033[H")  # Retour en haut SANS effacer
+
+            for line in texte:
+                sys.stdout.write(code + line + "\n")
+
+            sys.stdout.flush()
+            time.sleep(0.12)
 
 
 # ============================================================
@@ -68,8 +71,7 @@ def banner():
         print(line)
 
     # Lance l’animation RGB en arrière-plan (une seule fois)
-    threading.Thread(target=rgb_cycle, daemon=True).start()
-
+    threading.Thread(target=animate_banner, args=(texte,), daemon=True).start()
 
 
 # ============================================================
