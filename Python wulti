@@ -15,16 +15,22 @@ def clear():
 def banner():
     import time
 
-    # Couleurs RGB (rouge → orange)
-    ROUGE = "\033[38;2;255;0;0m"
-    ORANGE = "\033[38;2;255;128;0m"
-    RESET = "\033[0m"
+    # Couleurs RGB (rouge → orange → rouge)
+    couleurs = [
+        "\033[38;2;255;0;0m",     # Rouge
+        "\033[38;2;255;64;0m",    # Rouge-orangé
+        "\033[38;2;255;100;0m",   # Orange foncé
+        "\033[38;2;255;128;0m",   # Orange
+        "\033[38;2;255;100;0m",   # Orange foncé
+        "\033[38;2;255;64;0m",    # Rouge-orangé
+    ]
 
-    couleurs = [ROUGE, ORANGE]
+    RESET = "\033[0m"
 
     for c in couleurs:
         clear()
 
+        # LOGO RGB
         print(c + """
 ██╗    ██╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     
 ██║    ██║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
@@ -36,7 +42,7 @@ def banner():
             ====== WULTI TOOLBOX ======
 """ + RESET)
 
-        # TABLEAUX LIGNE 1 (coins arrondis)
+        # TABLEAUX LIGNE 1
         t1 = [
             "╭────────────────────────╮",
             "│     [1] IP Lookup      │",
@@ -70,7 +76,7 @@ def banner():
         t4 = [
             "╭────────────────────────╮",
             "│   [4] Webhook Panel    │",
-            "├────────────────────────┤",
+            "├────────────────────────╤",
             "│ Envoyer via webhook    │",
             "╰────────────────────────╯"
         ]
@@ -94,7 +100,8 @@ def banner():
         for i in range(5):
             print(c + t4[i] + "   " + t5[i] + "   " + t6[i] + RESET)
 
-        time.sleep(0.25)
+        time.sleep(0.15)
+
 
 
 
