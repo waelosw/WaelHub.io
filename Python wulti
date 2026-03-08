@@ -16,17 +16,24 @@ def banner():
     import time
     import sys
 
-    # Dégradé rouge → orange → rouge
-    couleurs = [
-        (255, 0, 0),
-        (255, 40, 0),
-        (255, 80, 0),
-        (255, 120, 0),
-        (255, 80, 0),
-        (255, 40, 0),
+    # Fonction fade entre deux couleurs
+    def fade(c1, c2, steps=60):
+        r1, g1, b1 = c1
+        r2, g2, b2 = c2
+        for i in range(steps):
+            r = int(r1 + (r2 - r1) * (i / steps))
+            g = int(g1 + (g2 - g1) * (i / steps))
+            b = int(b1 + (b2 - b1) * (i / steps))
+            yield (r, g, b)
+
+    # Couleurs du cycle (rouge → orange → rouge)
+    cycle = [
+        (255, 0, 0),      # Rouge
+        (255, 120, 0),    # Orange
+        (255, 0, 0),      # Rouge
     ]
 
-    # Ton banner complet (affiché UNE SEULE FOIS)
+    # Ton banner complet
     texte = [
 "██╗    ██╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     ",
 "██║    ██║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     ",
@@ -50,21 +57,21 @@ def banner():
 "╰────────────────────────╯   ╰────────────────────────╯   ╰────────────────────────╯",
     ]
 
-    # On affiche le texte UNE FOIS
+    # Affiche le texte UNE SEULE FOIS
     for line in texte:
         print(line)
 
-    # Animation RGB SANS effacer l'écran
+    # Animation fade RGB
     while True:
-        for r, g, b in couleurs:
-            code = f"\033[38;2;{r};{g};{b}m"
-            sys.stdout.write("\033[H")  # Retour en haut sans clear
+        for i in range(len(cycle) - 1):
+            for r, g, b in fade(cycle[i], cycle[i+1], steps=80):
+                code = f"\033[38;2;{r};{g};{b}m"
+                sys.stdout.write("\033[H")  # Retour en haut
+                for line in texte:
+                    sys.stdout.write(code + line + "\n")
+                sys.stdout.flush()
+                time.sleep(0.015)  # vitesse du fade
 
-            for line in texte:
-                sys.stdout.write(code + line + "\n")
-
-            sys.stdout.flush()
-            time.sleep(0.20)  # ← vitesse plus lente
 
 
 
